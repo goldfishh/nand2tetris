@@ -1,0 +1,97 @@
+// Implementation of classic arcade game Pong (translated from Python).
+// 
+// Author: Alan Farkas
+// Course: From Nand-To-Tetris-II (Coursera)
+// Assignment: Project 9 (Jack Program)
+//
+// Last Edit: 11/12/2017
+//
+
+/**
+ * Paddle Class
+ *
+ */
+class Paddle {
+
+   field int x, y; 				// screen location of paddle's top-left edge
+   field int height, width; 	// paddle height & width in pixels
+   field int boardHeight;		// board height in pixels
+
+
+   /** Constructs a new paddle with a given location and size. */
+   constructor Paddle new(int startX, int startY, int startWidth, int startHeight, int startScreenHeight) {
+		let x = startX;
+		let y = startY;
+		let height = startHeight;
+		let width = startWidth;
+		let boardHeight = startScreenHeight;
+		do display();
+		return this;
+   }
+
+  /** Disposes this paddle. */
+   method void dispose() {
+		do Memory.deAlloc(this);
+		return;
+   }
+
+   /** Makes the paddle visible. */
+   method void display() {
+		do Screen.setColor(true);
+		do draw();
+		return;
+   }
+
+   /** Draws the paddle (visible / invisible) on the screen. */
+   method void draw() {
+		do Screen.drawRectangle(x, y, x + width, y + height);
+		return;
+   }
+
+   /** Erases the paddle from the screen. */
+   method void erase() {
+		do Screen.setColor(false);
+		do draw();
+		return;
+   }
+
+   	/** Returns the paddle's height. */
+	method int getHeight() {
+		return height;
+	}
+
+	/** Returns the paddle's width. */
+	method int getWidth() {
+		return width;
+	}
+
+   	/** Returns the paddle's horizontal position. */
+	method int getX() {
+		return x;
+	}
+
+	/** Returns the paddle's horizontal position. */
+	method int getY() {
+		return y;
+	}
+
+	/** Moves the paddle to a new postion using the specified velocity. */
+	method void move(int velocity) {
+		var int newY;
+   
+		// Erase paddle from current position	
+		do erase();
+	  
+		// Update paddle's vertical position, keep paddle on the screen 
+		let newY = y + velocity;
+		if ( ~(newY < 0)  & ((newY + height) < boardHeight) ){
+			let y = newY;
+		}
+	  
+		// Draw paddle in new position
+		do display();
+	  
+		return;
+	}
+
+}

@@ -1,0 +1,34 @@
+class Vector {
+	field Array a;
+	field int sin, cos;
+	constructor Vector new(int x, int y) {
+		let a = Array.new(2);
+		let a[0] = x;
+		let a[1] = y;
+		return this;
+	}
+	
+	method void move(int x, int y) {
+		let a[0] = x;
+		let a[1] = y;
+		return;
+	}
+	
+	/*function void add(Vector v, Vector v1, Vector v2) {
+		let v.a[0] = v1.a[0] + v2.a[0];
+		let v.a[1] = v1.a[1] + v2.a[1];
+		return;
+	}*/
+	
+
+
+	method int sin(int t) {
+		// V^2 = a[0]^2 + a[1]^2
+		// V = sqrt(a[0]^2 + a[1]^2)
+		// sin = V * t * a[1] / V
+		return t*a[1];
+	}
+	method int cos(int t) {
+		return t*a[0];
+	}
+}

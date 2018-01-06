@@ -1,0 +1,10 @@
+class Main{
+	function void main(){
+		var Cell_Game game;
+		let game = Cell_Game.new(1,2);
+		do game.choose_tuan(0);
+		do game.auto_slow();
+		do game.dispose();
+		return;
+	}
+}

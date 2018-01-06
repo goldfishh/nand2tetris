@@ -1,0 +1,217 @@
+//generate the basic shapes
+
+class Graphics {
+  field int top, bottom, left, right;
+  field int type;
+  field int leftBound, rightBound;
+
+  constructor Graphics new(int x) {
+      let leftBound=192;
+      let rightBound=271;
+      do setType(x);
+      let top=0;
+      let bottom=0;
+      let left=0;
+      let right=0;
+      return this;
+  }
+
+  method void dispose() {
+      do Memory.deAlloc(this);
+      return;
+   }
+
+  method int getTop() {
+     return top;
+  }
+
+  method void setType(int x) {
+      if(x-(x/2*2)=0) {let type=1;return;}
+      let type=2;
+      return;
+  }
+
+  method void drawInNext() {
+      if(type=1)  {do draw(294,69);}
+      if(type=2)  {do draw(286,73);}
+      if(type=3)  {do draw(294,65);}
+      return;
+  } 
+  
+  method void eraseNext() {
+      if(type=1)  {do erase(294,69);}
+      if(type=2)  {do erase(286,73);}
+      if(type=3)  {do erase(294,65);}
+      return;
+  }
+
+  method void drawInPanel() {
+      do draw(224,0);
+      if(type=1) {
+	let top=0;    
+	let bottom=15;    
+	let left=224;    
+	let right=239;    
+      }
+      if(type=2) {
+	let top=0;    
+	let bottom=7;   
+	let left=224;    
+	let right=255;   
+      }
+      if(type=3) {
+	let top=0;
+	let bottom=23;
+	let left=224;
+	let right=239;	
+      }
+       return;
+  } 
+
+  method void draw(int x, int y) {
+      do Screen.setColor(true);
+      if(type=1) {
+        do Screen.drawRectangle(x, y, x+15, y+15);
+      }
+      if(type =2) {
+	do Screen.drawRectangle(x, y, x+31, y+7);
+      }	
+      if(type =3) {
+	do Screen.drawRectangle(x, y+8, x+7, y+23);
+	do Screen.drawRectangle(x+8, y, x+15, y+15);
+      }
+      return;
+   }
+
+  method void erase(int x, int y) {
+      do Screen.setColor(false);
+      if(type=1) {
+        do Screen.drawRectangle(x, y, x+15, y+15);
+      }
+      if(type =2) {
+	do Screen.drawRectangle(x, y, x+31, y+7);
+      }	
+      if(type =3) {
+	do Screen.drawRectangle(x, y+8, x+7, y+23);
+	do Screen.drawRectangle(x+8, y, x+15, y+15);
+      }
+      return;
+   }
+
+  method void moveLeft() {       //move 8 pixels one time
+      if (left > leftBound) {
+         do erase(left, top);
+         let left = left - 8;
+	 let right=right-8;
+         do draw(left, top);
+      }
+      do Sys.wait(150);
+      return;
+   }
+
+  method void moveRight() {
+      if (right < rightBound) {
+         do erase(left, top);
+         let right = right + 8;
+	 let left = left + 8;
+         do draw(left, top);
+      }
+      do Sys.wait(150);
+      return;
+   }
+
+  method boolean check1(int x, int n) {    //check if x's last n bits are 0,n->[1,16]
+    var int i;
+    let i=0;  //check form the 16-th bit
+    while(i<n) {
+        if(~(x/2*2=x)) {return false;}
+        let x=x/2;
+        let i=i+1;
+    } 
+    return true;
+}
+
+  method boolean check2(int x, int n) {    //check if x's first n bits are 0,n->[0,15]
+    var int i;
+    let i=0;
+    if(n=0) {return true;}
+    while(i+n<16) {   //i<16-n
+        let x=x/2;
+        let i=i+1;
+    }
+    let i=0;
+    while(i<n) {
+        if(~(x/2*2=x)) {return false;}
+        let x=x/2;
+        let i=i+1;
+    }
+    return true;
+}
+
+  method boolean isDownable() {     // a shape could move down when blocks below are blank
+      var int addr1, addr2, addr3;
+      var int getMemory1, getMemory2, getMemory3;   
+      var int tmp1, tmp2, i;
+      if(bottom=255) {return false;}
+      if(type=1) {
+        let addr1=32*(bottom+1)+(left/16)+16384;
+	let addr2=addr1+1;
+	let getMemory1=Memory.peek(addr1);	
+        let getMemory2=Memory.peek(addr2);
+        let tmp2=left-(left/16*16);
+        let tmp1=16-tmp2;
+        if(check1(getMemory1, tmp1)) {
+	     if(check2(getMemory2, tmp2)) {return true;}
+        }
+      }
+      if(type=2) {
+	let addr1=32*(bottom+1)+(left/16)+16384;
+	let addr2=addr1+1;
+        let addr3=addr1+2;
+        let getMemory1=Memory.peek(addr1);	
+        let getMemory2=Memory.peek(addr2);
+        let getMemory3=Memory.peek(addr3);	
+	let tmp2=left-(left/16*16);
+        let tmp1=16-tmp2;
+        if(getMemory2=0) {
+            if(check1(getMemory1, tmp1)&check2(getMemory3, tmp2))  {return true;}
+        }
+      }
+      if(type=3) {
+	let addr1=32*(top+16)+(right/16)+16384;
+	let addr2=32*(bottom+1)+(left/16)+16384;
+	let getMemory1=Memory.peek(addr1);	
+        let getMemory2=Memory.peek(addr2);
+        if(left-(left/16*16)=0) {
+	   if(check2(getMemory2,8) & check1(getMemory1,8)) {return true;}
+        }
+        if(~(left-(left/16*16)=0)) {
+	   if(check1(getMemory2,8) & check2(getMemory1,8)) {return true;}
+        }
+      }
+      return false;
+  }
+
+  method boolean check(int x, int n) {   //check if x's n-th bit is 0
+      var int i;
+      let i=0;
+      while(i+n<16) {   //i<16-n
+           let x=x/2;
+           let i=i+1;
+      }
+      if(x/2*2=x) {return true;}
+      return false;
+  }
+
+  method void moveDown() {
+	if(bottom<255) {
+	do erase(left, top);
+	let top=top+2;
+	let bottom =bottom+2;
+        do draw(left, top);
+        }
+      do Sys.wait(10);
+      return;
+   }
+}
+

@@ -1,0 +1,1790 @@
+function Game.new 1
+push constant 8
+call Memory.alloc 1
+pop pointer 0
+push constant 16
+pop this 5
+push constant 0
+pop local 0
+push constant 0
+pop this 0
+push constant 1
+pop this 1
+push constant 0
+pop this 4
+push constant 0
+pop this 2
+push this 5
+push this 5
+call Math.multiply 2
+call Array.new 1
+pop this 3
+label WHILE_EXP0
+push local 0
+push this 5
+push this 5
+call Math.multiply 2
+eq
+not
+not
+if-goto WHILE_END0
+push local 0
+push this 3
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 2
+push constant 57
+call Output.moveCursor 2
+pop temp 0
+push this 0
+call Output.printInt 1
+pop temp 0
+push this 0
+call Output.printInt 1
+pop temp 0
+push this 0
+call Output.printInt 1
+pop temp 0
+push pointer 0
+return
+function Game.change2indice 1
+push argument 0
+pop pointer 0
+push constant 16
+push argument 2
+call Math.multiply 2
+push this 5
+call Math.divide 2
+push argument 1
+push constant 128
+sub
+push this 5
+call Math.divide 2
+add
+pop local 0
+push local 0
+return
+function Game.write_figure 1
+push argument 0
+pop pointer 0
+push pointer 0
+push argument 1
+push argument 2
+call Game.change2indice 3
+pop local 0
+push local 0
+push this 3
+add
+push constant 0
+not
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 0
+return
+function Game.draw 2
+push argument 0
+pop pointer 0
+push argument 1
+push constant 16
+call Math.divide 2
+push constant 16
+call Math.multiply 2
+pop local 1
+push argument 1
+push local 1
+sub
+push constant 16
+call Math.multiply 2
+push constant 128
+add
+pop local 0
+push argument 2
+call Screen.setColor 1
+pop temp 0
+push local 0
+push local 1
+push local 0
+push this 5
+push constant 1
+sub
+add
+push local 1
+push this 5
+push constant 1
+sub
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function Game.all_down 1
+push argument 0
+pop pointer 0
+push constant 255
+pop local 0
+push argument 1
+push constant 1
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+label WHILE_EXP0
+push local 0
+push constant 15
+eq
+not
+not
+if-goto WHILE_END0
+push local 0
+push this 3
+add
+push local 0
+push constant 16
+sub
+push this 3
+add
+pop pointer 1
+push that 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push pointer 0
+push local 0
+push local 0
+push this 3
+add
+pop pointer 1
+push that 0
+call Game.draw 3
+pop temp 0
+push local 0
+push constant 1
+sub
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+label WHILE_EXP1
+push local 0
+push constant 1
+neg
+eq
+not
+not
+if-goto WHILE_END1
+push local 0
+push this 3
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push pointer 0
+push local 0
+push local 0
+push this 3
+add
+pop pointer 1
+push that 0
+call Game.draw 3
+pop temp 0
+push local 0
+push constant 1
+sub
+pop local 0
+goto WHILE_EXP1
+label WHILE_END1
+goto IF_END0
+label IF_FALSE0
+label WHILE_EXP2
+push local 0
+push constant 255
+push argument 1
+push constant 1
+sub
+push constant 16
+call Math.multiply 2
+sub
+eq
+not
+not
+if-goto WHILE_END2
+push local 0
+push constant 1
+sub
+pop local 0
+goto WHILE_EXP2
+label WHILE_END2
+label WHILE_EXP3
+push local 0
+push constant 15
+eq
+not
+not
+if-goto WHILE_END3
+push local 0
+push this 3
+add
+push local 0
+push constant 16
+sub
+push this 3
+add
+pop pointer 1
+push that 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push pointer 0
+push local 0
+push local 0
+push this 3
+add
+pop pointer 1
+push that 0
+call Game.draw 3
+pop temp 0
+push local 0
+push constant 1
+sub
+pop local 0
+goto WHILE_EXP3
+label WHILE_END3
+label WHILE_EXP4
+push local 0
+push constant 1
+neg
+eq
+not
+not
+if-goto WHILE_END4
+push local 0
+push this 3
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push pointer 0
+push local 0
+push local 0
+push this 3
+add
+pop pointer 1
+push that 0
+call Game.draw 3
+pop temp 0
+push local 0
+push constant 1
+sub
+pop local 0
+goto WHILE_EXP4
+label WHILE_END4
+label IF_END0
+push constant 0
+return
+function Game.check 10
+push argument 0
+pop pointer 0
+push constant 0
+not
+pop local 6
+push constant 0
+not
+pop local 7
+push constant 0
+not
+pop local 8
+push constant 0
+not
+pop local 9
+push constant 0
+pop local 5
+push constant 256
+push this 5
+sub
+pop local 3
+push local 3
+push this 5
+sub
+pop local 2
+push local 2
+push this 5
+sub
+pop local 1
+push local 1
+push this 5
+sub
+pop local 0
+push local 3
+pop local 4
+label WHILE_EXP0
+push local 4
+push local 3
+push constant 16
+add
+eq
+not
+not
+if-goto WHILE_END0
+push local 4
+push this 3
+add
+pop pointer 1
+push that 0
+not
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+pop local 6
+push local 3
+push constant 15
+add
+pop local 4
+label IF_FALSE0
+push local 4
+push constant 1
+add
+pop local 4
+goto WHILE_EXP0
+label WHILE_END0
+push local 2
+pop local 4
+label WHILE_EXP1
+push local 4
+push local 2
+push constant 16
+add
+eq
+not
+not
+if-goto WHILE_END1
+push local 4
+push this 3
+add
+pop pointer 1
+push that 0
+not
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 0
+pop local 7
+push local 2
+push constant 15
+add
+pop local 4
+label IF_FALSE1
+push local 4
+push constant 1
+add
+pop local 4
+goto WHILE_EXP1
+label WHILE_END1
+push local 1
+pop local 4
+label WHILE_EXP2
+push local 4
+push local 1
+push constant 16
+add
+eq
+not
+not
+if-goto WHILE_END2
+push local 4
+push this 3
+add
+pop pointer 1
+push that 0
+not
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push constant 0
+pop local 8
+push local 1
+push constant 15
+add
+pop local 4
+label IF_FALSE2
+push local 4
+push constant 1
+add
+pop local 4
+goto WHILE_EXP2
+label WHILE_END2
+push local 0
+pop local 4
+label WHILE_EXP3
+push local 4
+push local 0
+push constant 16
+add
+eq
+not
+not
+if-goto WHILE_END3
+push local 4
+push this 3
+add
+pop pointer 1
+push that 0
+not
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push constant 0
+pop local 9
+push local 0
+push constant 15
+add
+pop local 4
+label IF_FALSE3
+push local 4
+push constant 1
+add
+pop local 4
+goto WHILE_EXP3
+label WHILE_END3
+push constant 0
+not
+push local 6
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push local 5
+push constant 1
+add
+pop local 5
+push pointer 0
+push constant 1
+call Game.all_down 2
+pop temp 0
+label IF_FALSE4
+push constant 0
+not
+push local 7
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push local 5
+push constant 1
+add
+pop local 5
+push local 5
+push constant 2
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push pointer 0
+push constant 1
+call Game.all_down 2
+pop temp 0
+goto IF_END6
+label IF_FALSE6
+push pointer 0
+push constant 2
+call Game.all_down 2
+pop temp 0
+label IF_END6
+label IF_FALSE5
+push constant 0
+not
+push local 8
+eq
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push local 5
+push constant 1
+add
+pop local 5
+push local 5
+push constant 3
+eq
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push pointer 0
+push constant 1
+call Game.all_down 2
+pop temp 0
+goto IF_END8
+label IF_FALSE8
+push local 5
+push constant 2
+eq
+if-goto IF_TRUE9
+goto IF_FALSE9
+label IF_TRUE9
+push pointer 0
+push constant 2
+call Game.all_down 2
+pop temp 0
+goto IF_END9
+label IF_FALSE9
+push pointer 0
+push constant 3
+call Game.all_down 2
+pop temp 0
+label IF_END9
+label IF_END8
+label IF_FALSE7
+push constant 0
+not
+push local 9
+eq
+if-goto IF_TRUE10
+goto IF_FALSE10
+label IF_TRUE10
+push local 5
+push constant 1
+add
+pop local 5
+push local 5
+push constant 4
+eq
+if-goto IF_TRUE11
+goto IF_FALSE11
+label IF_TRUE11
+push pointer 0
+push constant 1
+call Game.all_down 2
+pop temp 0
+goto IF_END11
+label IF_FALSE11
+push local 5
+push constant 3
+eq
+if-goto IF_TRUE12
+goto IF_FALSE12
+label IF_TRUE12
+push pointer 0
+push constant 2
+call Game.all_down 2
+pop temp 0
+goto IF_END12
+label IF_FALSE12
+push local 5
+push constant 2
+eq
+if-goto IF_TRUE13
+goto IF_FALSE13
+label IF_TRUE13
+push pointer 0
+push constant 3
+call Game.all_down 2
+pop temp 0
+goto IF_END13
+label IF_FALSE13
+push pointer 0
+push constant 4
+call Game.all_down 2
+pop temp 0
+label IF_END13
+label IF_END12
+label IF_END11
+label IF_FALSE10
+push local 5
+push constant 4
+eq
+if-goto IF_TRUE14
+goto IF_FALSE14
+label IF_TRUE14
+push this 0
+push constant 1000
+add
+pop this 0
+goto IF_END14
+label IF_FALSE14
+push local 5
+push constant 3
+eq
+if-goto IF_TRUE15
+goto IF_FALSE15
+label IF_TRUE15
+push this 0
+push constant 300
+add
+pop this 0
+goto IF_END15
+label IF_FALSE15
+push local 5
+push constant 2
+eq
+if-goto IF_TRUE16
+goto IF_FALSE16
+label IF_TRUE16
+push this 0
+push constant 100
+add
+pop this 0
+goto IF_END16
+label IF_FALSE16
+push local 5
+push constant 1
+eq
+if-goto IF_TRUE17
+goto IF_FALSE17
+label IF_TRUE17
+push this 0
+push constant 40
+add
+pop this 0
+label IF_FALSE17
+label IF_END16
+label IF_END15
+label IF_END14
+push constant 2
+push constant 57
+call Output.moveCursor 2
+pop temp 0
+push this 0
+call Output.printInt 1
+pop temp 0
+push constant 0
+return
+function Game.play 1
+push argument 0
+pop pointer 0
+push argument 1
+push constant 1
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 16
+call Segment_1.new 1
+pop this 6
+push constant 250
+call Sys.wait 1
+pop temp 0
+label WHILE_EXP0
+push this 6
+call Segment_1.get_moveable 1
+not
+if-goto WHILE_END0
+push constant 150
+call Sys.wait 1
+pop temp 0
+call Keyboard.keyPressed 0
+pop local 0
+push local 0
+push constant 131
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 6
+call Segment_1.get_label 1
+push constant 0
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push pointer 0
+push this 6
+push constant 1
+call Segment_1.get_x 2
+push this 6
+push constant 1
+call Segment_1.get_y 2
+push this 5
+sub
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+push pointer 0
+push this 6
+push constant 2
+call Segment_1.get_x 2
+push this 6
+push constant 2
+call Segment_1.get_y 2
+push this 5
+sub
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+push pointer 0
+push this 6
+push constant 2
+call Segment_1.get_x 2
+push this 6
+push constant 2
+call Segment_1.get_y 2
+push this 5
+push this 5
+add
+sub
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+push pointer 0
+push this 6
+push constant 4
+call Segment_1.get_x 2
+push this 6
+push constant 4
+call Segment_1.get_y 2
+push this 5
+add
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push this 6
+call Segment_1.rotate 1
+pop temp 0
+label IF_FALSE3
+goto IF_END2
+label IF_FALSE2
+push pointer 0
+push this 6
+push constant 2
+call Segment_1.get_x 2
+push this 5
+push this 5
+add
+sub
+push this 6
+push constant 2
+call Segment_1.get_y 2
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+push pointer 0
+push this 6
+push constant 2
+call Segment_1.get_x 2
+push this 5
+sub
+push this 6
+push constant 2
+call Segment_1.get_y 2
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+push pointer 0
+push this 6
+push constant 2
+call Segment_1.get_x 2
+push this 5
+add
+push this 6
+push constant 2
+call Segment_1.get_y 2
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push this 6
+call Segment_1.rotate 1
+pop temp 0
+label IF_FALSE4
+label IF_END2
+goto IF_END1
+label IF_FALSE1
+push local 0
+push constant 133
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push pointer 0
+push this 6
+push constant 1
+call Segment_1.get_x 2
+push this 6
+push constant 1
+call Segment_1.get_y 2
+push this 5
+add
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+push pointer 0
+push this 6
+push constant 2
+call Segment_1.get_x 2
+push this 6
+push constant 2
+call Segment_1.get_y 2
+push this 5
+add
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+push pointer 0
+push this 6
+push constant 3
+call Segment_1.get_x 2
+push this 6
+push constant 3
+call Segment_1.get_y 2
+push this 5
+add
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+push pointer 0
+push this 6
+push constant 4
+call Segment_1.get_x 2
+push this 6
+push constant 4
+call Segment_1.get_y 2
+push this 5
+add
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push this 6
+call Segment_1.move_down 1
+pop temp 0
+label IF_FALSE6
+goto IF_END5
+label IF_FALSE5
+push local 0
+push constant 130
+eq
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push pointer 0
+push this 6
+push constant 1
+call Segment_1.get_x 2
+push this 5
+sub
+push this 6
+push constant 1
+call Segment_1.get_y 2
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+push pointer 0
+push this 6
+push constant 2
+call Segment_1.get_x 2
+push this 5
+sub
+push this 6
+push constant 2
+call Segment_1.get_y 2
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+push pointer 0
+push this 6
+push constant 3
+call Segment_1.get_x 2
+push this 5
+sub
+push this 6
+push constant 3
+call Segment_1.get_y 2
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+push pointer 0
+push this 6
+push constant 4
+call Segment_1.get_x 2
+push this 5
+sub
+push this 6
+push constant 4
+call Segment_1.get_y 2
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push this 6
+call Segment_1.move_left 1
+pop temp 0
+label IF_FALSE8
+goto IF_END7
+label IF_FALSE7
+push local 0
+push constant 132
+eq
+if-goto IF_TRUE9
+goto IF_FALSE9
+label IF_TRUE9
+push pointer 0
+push this 6
+push constant 1
+call Segment_1.get_x 2
+push this 5
+add
+push this 6
+push constant 1
+call Segment_1.get_y 2
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+push pointer 0
+push this 6
+push constant 2
+call Segment_1.get_x 2
+push this 5
+add
+push this 6
+push constant 2
+call Segment_1.get_y 2
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+push pointer 0
+push this 6
+push constant 3
+call Segment_1.get_x 2
+push this 5
+add
+push this 6
+push constant 3
+call Segment_1.get_y 2
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+push pointer 0
+push this 6
+push constant 4
+call Segment_1.get_x 2
+push this 5
+add
+push this 6
+push constant 4
+call Segment_1.get_y 2
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+if-goto IF_TRUE10
+goto IF_FALSE10
+label IF_TRUE10
+push this 6
+call Segment_1.move_right 1
+pop temp 0
+label IF_FALSE10
+label IF_FALSE9
+label IF_END7
+label IF_END5
+label IF_END1
+push pointer 0
+push this 6
+push constant 1
+call Segment_1.get_x 2
+push this 6
+push constant 1
+call Segment_1.get_y 2
+push this 5
+add
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+push pointer 0
+push this 6
+push constant 2
+call Segment_1.get_x 2
+push this 6
+push constant 2
+call Segment_1.get_y 2
+push this 5
+add
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+push pointer 0
+push this 6
+push constant 3
+call Segment_1.get_x 2
+push this 6
+push constant 3
+call Segment_1.get_y 2
+push this 5
+add
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+push pointer 0
+push this 6
+push constant 4
+call Segment_1.get_x 2
+push this 6
+push constant 4
+call Segment_1.get_y 2
+push this 5
+add
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+if-goto IF_TRUE11
+goto IF_FALSE11
+label IF_TRUE11
+push this 6
+call Segment_1.move_down 1
+pop temp 0
+goto IF_END11
+label IF_FALSE11
+push this 6
+push constant 0
+call Segment_1.change_moveable 2
+pop temp 0
+label IF_END11
+goto WHILE_EXP0
+label WHILE_END0
+push pointer 0
+push this 6
+push constant 1
+call Segment_1.get_x 2
+push this 6
+push constant 1
+call Segment_1.get_y 2
+call Game.write_figure 3
+pop temp 0
+push pointer 0
+push this 6
+push constant 2
+call Segment_1.get_x 2
+push this 6
+push constant 2
+call Segment_1.get_y 2
+call Game.write_figure 3
+pop temp 0
+push pointer 0
+push this 6
+push constant 3
+call Segment_1.get_x 2
+push this 6
+push constant 3
+call Segment_1.get_y 2
+call Game.write_figure 3
+pop temp 0
+push pointer 0
+push this 6
+push constant 4
+call Segment_1.get_x 2
+push this 6
+push constant 4
+call Segment_1.get_y 2
+call Game.write_figure 3
+pop temp 0
+push pointer 0
+call Game.check 1
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push argument 1
+push constant 2
+eq
+if-goto IF_TRUE12
+goto IF_FALSE12
+label IF_TRUE12
+push constant 16
+call Segment_2.new 1
+pop this 7
+push constant 250
+call Sys.wait 1
+pop temp 0
+label WHILE_EXP1
+push this 7
+call Segment_2.get_moveable 1
+not
+if-goto WHILE_END1
+push constant 150
+call Sys.wait 1
+pop temp 0
+call Keyboard.keyPressed 0
+pop local 0
+push local 0
+push constant 131
+eq
+if-goto IF_TRUE13
+goto IF_FALSE13
+label IF_TRUE13
+push this 7
+call Segment_2.get_label 1
+push constant 0
+eq
+if-goto IF_TRUE14
+goto IF_FALSE14
+label IF_TRUE14
+push pointer 0
+push this 7
+push constant 1
+call Segment_2.get_x 2
+push this 7
+push constant 1
+call Segment_2.get_y 2
+push this 5
+sub
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+push pointer 0
+push this 7
+push constant 2
+call Segment_2.get_x 2
+push this 7
+push constant 2
+call Segment_2.get_y 2
+push this 5
+sub
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+push pointer 0
+push this 7
+push constant 2
+call Segment_2.get_x 2
+push this 7
+push constant 2
+call Segment_2.get_y 2
+push this 5
+push this 5
+add
+sub
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+push pointer 0
+push this 7
+push constant 4
+call Segment_2.get_x 2
+push this 7
+push constant 4
+call Segment_2.get_y 2
+push this 5
+add
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+if-goto IF_TRUE15
+goto IF_FALSE15
+label IF_TRUE15
+push this 7
+call Segment_2.rotate 1
+pop temp 0
+label IF_FALSE15
+goto IF_END14
+label IF_FALSE14
+push pointer 0
+push this 7
+push constant 2
+call Segment_2.get_x 2
+push this 5
+push this 5
+add
+sub
+push this 7
+push constant 2
+call Segment_2.get_y 2
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+push pointer 0
+push this 7
+push constant 2
+call Segment_2.get_x 2
+push this 5
+sub
+push this 7
+push constant 2
+call Segment_2.get_y 2
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+push pointer 0
+push this 7
+push constant 2
+call Segment_2.get_x 2
+push this 5
+add
+push this 7
+push constant 2
+call Segment_2.get_y 2
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+if-goto IF_TRUE16
+goto IF_FALSE16
+label IF_TRUE16
+push this 7
+call Segment_2.rotate 1
+pop temp 0
+label IF_FALSE16
+label IF_END14
+goto IF_END13
+label IF_FALSE13
+push local 0
+push constant 133
+eq
+if-goto IF_TRUE17
+goto IF_FALSE17
+label IF_TRUE17
+push pointer 0
+push this 7
+push constant 1
+call Segment_2.get_x 2
+push this 7
+push constant 1
+call Segment_2.get_y 2
+push this 5
+add
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+push pointer 0
+push this 7
+push constant 2
+call Segment_2.get_x 2
+push this 7
+push constant 2
+call Segment_2.get_y 2
+push this 5
+add
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+push pointer 0
+push this 7
+push constant 3
+call Segment_2.get_x 2
+push this 7
+push constant 3
+call Segment_2.get_y 2
+push this 5
+add
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+push pointer 0
+push this 7
+push constant 4
+call Segment_2.get_x 2
+push this 7
+push constant 4
+call Segment_2.get_y 2
+push this 5
+add
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+if-goto IF_TRUE18
+goto IF_FALSE18
+label IF_TRUE18
+push this 7
+call Segment_2.move_down 1
+pop temp 0
+label IF_FALSE18
+goto IF_END17
+label IF_FALSE17
+push local 0
+push constant 130
+eq
+if-goto IF_TRUE19
+goto IF_FALSE19
+label IF_TRUE19
+push pointer 0
+push this 7
+push constant 1
+call Segment_2.get_x 2
+push this 5
+sub
+push this 7
+push constant 1
+call Segment_2.get_y 2
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+push pointer 0
+push this 7
+push constant 2
+call Segment_2.get_x 2
+push this 5
+sub
+push this 7
+push constant 2
+call Segment_2.get_y 2
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+push pointer 0
+push this 7
+push constant 3
+call Segment_2.get_x 2
+push this 5
+sub
+push this 7
+push constant 3
+call Segment_2.get_y 2
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+push pointer 0
+push this 7
+push constant 4
+call Segment_2.get_x 2
+push this 5
+sub
+push this 7
+push constant 4
+call Segment_2.get_y 2
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+if-goto IF_TRUE20
+goto IF_FALSE20
+label IF_TRUE20
+push this 7
+call Segment_2.move_left 1
+pop temp 0
+label IF_FALSE20
+goto IF_END19
+label IF_FALSE19
+push local 0
+push constant 132
+eq
+if-goto IF_TRUE21
+goto IF_FALSE21
+label IF_TRUE21
+push pointer 0
+push this 7
+push constant 1
+call Segment_2.get_x 2
+push this 5
+add
+push this 7
+push constant 1
+call Segment_2.get_y 2
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+push pointer 0
+push this 7
+push constant 2
+call Segment_2.get_x 2
+push this 5
+add
+push this 7
+push constant 2
+call Segment_2.get_y 2
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+push pointer 0
+push this 7
+push constant 3
+call Segment_2.get_x 2
+push this 5
+add
+push this 7
+push constant 3
+call Segment_2.get_y 2
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+push pointer 0
+push this 7
+push constant 4
+call Segment_2.get_x 2
+push this 5
+add
+push this 7
+push constant 4
+call Segment_2.get_y 2
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+if-goto IF_TRUE22
+goto IF_FALSE22
+label IF_TRUE22
+push this 7
+call Segment_2.move_right 1
+pop temp 0
+label IF_FALSE22
+label IF_FALSE21
+label IF_END19
+label IF_END17
+label IF_END13
+push pointer 0
+push this 7
+push constant 1
+call Segment_2.get_x 2
+push this 7
+push constant 1
+call Segment_2.get_y 2
+push this 5
+add
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+push pointer 0
+push this 7
+push constant 2
+call Segment_2.get_x 2
+push this 7
+push constant 2
+call Segment_2.get_y 2
+push this 5
+add
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+push pointer 0
+push this 7
+push constant 3
+call Segment_2.get_x 2
+push this 7
+push constant 3
+call Segment_2.get_y 2
+push this 5
+add
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+push pointer 0
+push this 7
+push constant 4
+call Segment_2.get_x 2
+push this 7
+push constant 4
+call Segment_2.get_y 2
+push this 5
+add
+call Game.change2indice 3
+push this 3
+add
+pop pointer 1
+push that 0
+not
+and
+if-goto IF_TRUE23
+goto IF_FALSE23
+label IF_TRUE23
+push this 7
+call Segment_2.move_down 1
+pop temp 0
+goto IF_END23
+label IF_FALSE23
+push this 7
+push constant 0
+call Segment_2.change_moveable 2
+pop temp 0
+label IF_END23
+goto WHILE_EXP1
+label WHILE_END1
+push pointer 0
+push this 7
+push constant 1
+call Segment_2.get_x 2
+push this 7
+push constant 1
+call Segment_2.get_y 2
+call Game.write_figure 3
+pop temp 0
+push pointer 0
+push this 7
+push constant 2
+call Segment_2.get_x 2
+push this 7
+push constant 2
+call Segment_2.get_y 2
+call Game.write_figure 3
+pop temp 0
+push pointer 0
+push this 7
+push constant 3
+call Segment_2.get_x 2
+push this 7
+push constant 3
+call Segment_2.get_y 2
+call Game.write_figure 3
+pop temp 0
+push pointer 0
+push this 7
+push constant 4
+call Segment_2.get_x 2
+push this 7
+push constant 4
+call Segment_2.get_y 2
+call Game.write_figure 3
+pop temp 0
+push pointer 0
+call Game.check 1
+pop temp 0
+label IF_FALSE12
+label IF_END0
+push constant 0
+return
+function Game.if_gameover 0
+push argument 0
+pop pointer 0
+push constant 8
+push this 3
+add
+pop pointer 1
+push that 0
+push constant 9
+push this 3
+add
+pop pointer 1
+push that 0
+or
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+not
+return
+label IF_FALSE0
+push constant 0
+return
+function Game.begin 0
+push argument 0
+pop pointer 0
+label WHILE_EXP0
+push this 1
+push constant 0
+eq
+not
+not
+if-goto WHILE_END0
+push this 1
+push constant 1
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+push constant 1
+call Game.play 2
+pop temp 0
+push constant 2
+pop this 1
+goto IF_END0
+label IF_FALSE0
+push this 1
+push constant 2
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push pointer 0
+push constant 2
+call Game.play 2
+pop temp 0
+push constant 1
+pop this 1
+label IF_FALSE1
+label IF_END0
+push pointer 0
+call Game.if_gameover 1
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push constant 0
+pop this 1
+label IF_FALSE2
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return

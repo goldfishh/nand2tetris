@@ -1,0 +1,239 @@
+#include<bits/stdc++.h>
+using namespace std;
+bool is_blank_line(string psr){
+	//check explanation//
+	if(psr == "") return true; 
+	int tt = 1050;
+	int lth = psr.length();
+	for(int i = 0; i < lth-1;i++){
+		if(psr[i] == '/' && psr[i+1] == '/'){
+			tt = i;
+			break;
+		}
+	}
+	bool tmp = true;	
+	if(tt == 0) return true;
+	else for(int i = 0; i < tt && i < lth; i++){
+		if(psr[i] != ' ' && psr[i] != '\t'){
+			tmp = false;
+			break;
+		}
+	}
+	if(tmp) return true;
+	else return false;
+}
+bool is_A(string psr,int &ind){
+	bool exist_at = false;
+	for(int i = 0 ; i < psr.length(); i++){
+		if(psr[i] == '@'){
+			exist_at = true;
+			ind = i;			
+			break;
+		} 
+	}
+	return exist_at;
+}
+bool not_lparath(string psr){
+	for(int i = 0; i < psr.length(); i++){
+		if(psr[i] == '/' && psr[i+1] == '/') break;
+		if(psr[i] == '(') return false;		
+	}
+	return true;
+}
+//individual line check
+
+int main(){
+//	freopen("Pong.asm","r",stdin);
+//	freopen("Add.hack","w",stdout);
+	ifstream fin1;
+	ofstream fout;
+	fin1.open("Add.asm");
+	fout.open("Add.hack"); 
+	map<string, string> st;
+	map<string, string>::iterator it;
+	
+	//pre_defined symbols
+	st["SP"] = "0";
+	st["LCL"] = "1";
+	st["ARG"] = "2";
+	st["THIS"] = "3";
+	st["THAT"] = "4";
+	st["R0"] = "0";st["R1"] = "1";st["R2"] = "2";st["R3"] = "3";
+	st["R4"] = "4";st["R5"] = "5";st["R6"] = "6";st["R7"] = "7";
+	st["R8"] = "8";st["R9"] = "9";st["R1O"] = "10";st["R11"] = "11";
+	st["R12"] = "12";st["R13"] = "13";st["R14"] = "14";st["R15"] = "15";
+	st["SCREEN"] = "16384";
+	st["KBD"] = "24576";
+	
+	//C_instruction_table
+	map<string, string> ctcp;
+	ctcp["0"] = "0101010";
+	ctcp["1"] = "0111111";
+	ctcp["-1"] = "0111010";
+	ctcp["D"] = "0001100";
+	ctcp["A"] = "0110000"; ctcp["M"] = "1110000";
+	ctcp["!D"] = "0001101";
+	ctcp["!A"] = "0110001"; ctcp["!M"] = "1110001";
+	ctcp["-D"] = "0001111";
+	ctcp["-A"] = "0110011"; ctcp["-M"] = "1110011";
+	ctcp["D+1"] = "0011111";
+	ctcp["A+1"] = "0110111"; ctcp["M+1"] = "1110111";
+	ctcp["D-1"] = "0001110";
+	ctcp["A-1"] = "0110010"; ctcp["M-1"] = "1110010";
+	ctcp["D+A"] = "0000010"; ctcp["D+M"] = "1000010";
+	ctcp["D-A"] = "0010011"; ctcp["D-M"] = "1010011";
+	ctcp["A-D"] = "0000111"; ctcp["M-D"] = "1000111";
+	ctcp["D&A"] = "0000000"; ctcp["D&M"] = "1000000";
+	ctcp["D|A"] = "0010101"; ctcp["D|M"] = "1010101"; 
+	
+	map<string, string> ctdest;
+	ctdest["M"] = "001"; 
+	ctdest["D"] = "010";
+	ctdest["MD"] = "011";
+	ctdest["A"] = "100";
+	ctdest["AM"] = "101";
+	ctdest["AD"] = "110";
+	ctdest["AMD"] = "111";
+	
+	map<string, string> ctjump;
+	ctjump["JGT"] = "001";
+	ctjump["JEQ"] = "010";
+	ctjump["JGE"] = "011";
+	ctjump["JLT"] = "100";
+	ctjump["JNE"] = "101";
+	ctjump["JLE"] = "110";
+	ctjump["JMP"] = "111";
+	int num = 16;
+	int line = 0;
+	//	first pass
+	string pre;
+	while(getline(fin1,pre)){
+		int tmp = 0;
+		if(is_blank_line(pre)){
+			continue;
+		}
+		else if(not_lparath(pre)){
+			line++;
+			continue;
+		} 
+		char label[1050] = "";
+		tmp = 0;
+		for(int i = 1; pre[i] != ')'; i++){
+			label[tmp++] = pre[i];
+		}
+		char snum[1050];
+		sprintf(snum,"%d",line);
+		st[label] = snum;
+	}
+	fin1.close();
+	fin1.clear();
+//	fclose(stdin);
+	
+	// secorn pass
+//	freopen("Pong.asm","r",stdin);	
+	ifstream fin2;
+	fin2.open("Add.asm");
+	string psr;
+	int ind = 1050;
+	while(getline(fin2,psr)){
+		if(is_blank_line(psr)){
+			continue;
+		}
+		else if(!not_lparath(psr)){
+			continue;
+		}
+		else if(is_A(psr,ind)){
+			int sum = 0;
+			for(int i = ind+1; i < psr.length(); i++){
+				if(psr[i] != ' ' && psr[i] != '\t' && psr[i] != '\n' && psr[i] != '/')
+					sum++;
+				else break;
+			}
+			string val = psr.substr(ind+1,sum);
+			bool tmp = false;
+			for(int i = 0; i < val.length(); i++){
+				if(!isdigit(val[i])){
+					tmp = true;
+					break;
+				}
+			}
+			if(!tmp){
+				int rsl = atoi(val.c_str());
+				char A_inst[17] = "0000000000000000";
+				int tmp = 15;
+				while(rsl){
+					A_inst[tmp--] = rsl%2 + '0';
+					rsl /= 2;
+				}
+				fout << A_inst << endl;
+			}
+			else{
+				if(st.find(val) != st.end()){
+					string stmp = st[val];
+					int rsl = atoi(stmp.c_str());
+					char A_inst[17] = "0000000000000000";
+					int tmp = 15;
+					while(rsl){
+						A_inst[tmp--] = rsl%2 + '0';
+						rsl /= 2;
+					}
+					fout << A_inst << endl;					
+				}
+				else{
+					char stmp[1050];
+					int rsl = num;
+					sprintf(stmp,"%d",num++);
+					st[val] = stmp;
+					char A_inst[17] = "0000000000000000";
+					int tmp = 15;
+					while(rsl){
+						A_inst[tmp--] = rsl%2 + '0';
+						rsl /= 2;
+					}
+					fout << A_inst << endl;						
+				}
+			}
+		}
+		else{
+			bool exist_equ = false, exist_semi = false;
+			int ind_equ = 0,ind_semi = 0,i = 0;
+			while(psr[i] == ' ' || psr[i] == '\t') i++;
+			int fir = i;
+			for(; i < psr.length(); i++){
+				if(psr[i] == '/' || psr[i] == ' ' || psr[i] == '\t') break;
+				if(psr[i] == '='){
+					exist_equ = true;
+					ind_equ = i;
+				}
+				if(psr[i] == ';'){
+					exist_semi = true;
+					ind_semi = i;
+				}
+				if(exist_equ && exist_semi) break;
+			}
+			char header[17] = "111",comp[8],dest[4] = "000",jump[4] = "000";
+			if(!exist_semi && exist_equ){
+				string s1 = psr.substr(fir,ind_equ-fir);
+				string s2 = psr.substr(ind_equ+1,i-ind_equ-1);
+				if(ctdest.find(s1) != ctdest.end())
+					strcpy(dest,ctdest[s1].c_str());
+				strcpy(comp,ctcp[s2].c_str());
+			}
+			else if(!exist_equ && exist_semi){
+				string s1 = psr.substr(fir,ind_semi-fir);
+				string s2 = psr.substr(ind_semi+1,3);
+				strcpy(comp,ctcp[s1].c_str());
+				if(ctjump.find(s2) != ctjump.end())
+					strcpy(jump,ctjump[s2].c_str());
+			}
+			strcat(header,comp);
+			strcat(header,dest);
+			strcat(header,jump);
+			fout << header << endl;		
+		}
+	}
+	fin2.close();
+	fin2.clear();
+//	fclose(stdin);
+	return 0;
+} 

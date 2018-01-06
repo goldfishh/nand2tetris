@@ -1,0 +1,73 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/Memory.jack
+
+/**
+ * This library provides two services: direct access to the computer's main
+ * memory (RAM), and allocation and recycling of memory blocks. The Hack RAM
+ * consists of 32,768 words, each holding a 16-bit binary number.
+ */ 
+class Memory {
+	static Array ram;
+	static int freeList;
+    /** Initializes the class. */
+    function void init() {
+		let ram = 0;
+		let freeList = 2048;
+		let ram[freeList] = 14336;
+		let ram[freeList+1] = -1;
+		return ;
+    }
+
+    /** Returns the RAM value at the given address. */
+    function int peek(int address) {
+		return ram[address];
+    }
+
+    /** Sets the RAM value at the given address to the given value. */
+    function void poke(int address, int value) {
+		let ram[address] = value;
+		return ;
+    }
+
+    /** Finds an available RAM block of the given size and returns
+     *  a reference to its base address. */
+    function int alloc(int size) {
+		var int wire,tmp; 
+		let wire = freeList;
+		let tmp = ram[wire+1];
+		if(tmp = -1){
+			let ram[wire] = ram[wire] - size - 1;
+			let ram[wire+ram[wire]] = size + 1;
+			return (wire+ram[wire]+1);			
+		}
+		else{
+			while(~(tmp = -1)){
+				if((ram[wire] > (size+3)) | (ram[wire] = (size+3))){
+					let ram[wire] = ram[wire] - size - 1;
+					let ram[wire+ram[wire]] = size + 1;
+					return (wire+ram[wire]+1);
+				}
+				else{
+					let wire = tmp;
+				}
+			}
+		}
+		return -1; 
+    }
+
+    /** De-allocates the given object (cast as an array) by making
+     *  it available for future allocations. */
+    function void deAlloc(Array o) {
+		var int wire; 
+		let wire = freeList;
+		while(~(ram[wire+1] = -1)){
+			let wire = ram[wire+1];
+		}
+		let ram[wire+1] = o;
+		let wire = o;
+		let ram[wire+1] = -1;
+		return ;
+    }    
+}

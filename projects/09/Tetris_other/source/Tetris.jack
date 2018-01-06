@@ -1,0 +1,231 @@
+//generate the game frame
+
+class Tetris {
+
+  field Graphics shape1;	//shape in panel
+  field Graphics shape2;	//shape below "NEXT"
+  field int direction;
+  field boolean heightLegal;
+  field int count;
+  
+  constructor Tetris new() {
+	do Screen.drawLine(191,0,191,255);
+	do Screen.drawLine(272,0,272,255);
+	do Screen.drawLine(285,60,285,93);
+	do Screen.drawLine(318,60,318,93);
+	do Screen.drawLine(285,60,318,60);
+	do Screen.drawLine(285,93,318,93);
+	do drawN(1298);
+	do drawE(1299);
+	do drawX(1300);
+	do drawT(1301);
+        do Output.printString("press 'q' to exit");
+        do Output.println();
+        do Output.printString("press direction keys");
+        do Output.println();
+         do Output.printString("to move");
+        let count=3;
+	let shape1= Graphics.new(1);
+	let shape2= Graphics.new(2);
+        let heightLegal=true;
+	do shape1.drawInPanel();
+	do shape2.drawInNext();
+	return this;
+  }
+
+  method void dispose() {
+      do shape1.dispose();
+      do shape2.dispose();
+      do Memory.deAlloc(this);
+      return;
+   }
+
+  method void drawN(int location) {
+	var int memAddress;
+	let memAddress = 16384+location;
+	do Memory.poke(memAddress+0, 0);
+	do Memory.poke(memAddress+32, 0);
+	do Memory.poke(memAddress+64, 16390);
+	do Memory.poke(memAddress+96, 16394);
+	do Memory.poke(memAddress+128, 16402);
+	do Memory.poke(memAddress+160, 16418);
+	do Memory.poke(memAddress+192, 16450);
+	do Memory.poke(memAddress+224, 16514);
+	do Memory.poke(memAddress+256, 16642);
+	do Memory.poke(memAddress+288, 16898);
+	do Memory.poke(memAddress+320, 17410);
+	do Memory.poke(memAddress+352, 18434);
+	do Memory.poke(memAddress+384, 20482);
+	do Memory.poke(memAddress+416, 24578);
+	do Memory.poke(memAddress+448, 0);
+	do Memory.poke(memAddress+480, 0);
+	return;
+}
+
+method void drawE(int location) {
+	var int memAddress;
+	let memAddress = 16384+location;
+	do Memory.poke(memAddress+0, 0);
+	do Memory.poke(memAddress+32, 0);
+	do Memory.poke(memAddress+64, 8184);
+	do Memory.poke(memAddress+96, 8);
+	do Memory.poke(memAddress+128, 8);
+	do Memory.poke(memAddress+160, 8);
+	do Memory.poke(memAddress+192, 8);
+	do Memory.poke(memAddress+224, 4088);
+	do Memory.poke(memAddress+256, 8);
+	do Memory.poke(memAddress+288, 8);
+	do Memory.poke(memAddress+320, 8);
+	do Memory.poke(memAddress+352, 8);
+	do Memory.poke(memAddress+384, 8);
+	do Memory.poke(memAddress+416, 8184);
+	do Memory.poke(memAddress+448, 0);
+	do Memory.poke(memAddress+480, 0);
+	return;
+}
+
+  method void drawX(int location) {
+	var int memAddress;
+	let memAddress = 16384+location;
+	do Memory.poke(memAddress+0, 0);
+	do Memory.poke(memAddress+32, 0);
+	do Memory.poke(memAddress+64, 8196);
+	do Memory.poke(memAddress+96, 4104);
+	do Memory.poke(memAddress+128, 2064);
+	do Memory.poke(memAddress+160, 1056);
+	do Memory.poke(memAddress+192, 576);
+	do Memory.poke(memAddress+224, 384);
+	do Memory.poke(memAddress+256, 384);
+	do Memory.poke(memAddress+288, 576);
+	do Memory.poke(memAddress+320, 1056);
+	do Memory.poke(memAddress+352, 2064);
+	do Memory.poke(memAddress+384, 4104);
+	do Memory.poke(memAddress+416, 8196);
+	do Memory.poke(memAddress+448, 0);
+	do Memory.poke(memAddress+480, 0);
+	return;
+}
+
+  method void drawT(int location) {
+	var int memAddress;
+	let memAddress = 16384+location;
+	do Memory.poke(memAddress+0, 0);
+	do Memory.poke(memAddress+32, 0);
+	do Memory.poke(memAddress+64, 16380);
+	do Memory.poke(memAddress+96, 128);
+	do Memory.poke(memAddress+128, 128);
+	do Memory.poke(memAddress+160, 128);
+	do Memory.poke(memAddress+192, 128);
+	do Memory.poke(memAddress+224, 128);
+	do Memory.poke(memAddress+256, 128);
+	do Memory.poke(memAddress+288, 128);
+	do Memory.poke(memAddress+320, 128);
+	do Memory.poke(memAddress+352, 128);
+	do Memory.poke(memAddress+384, 128);
+	do Memory.poke(memAddress+416, 128);
+	do Memory.poke(memAddress+448, 0);
+	do Memory.poke(memAddress+480, 0);
+	return;
+}
+
+  method void moveShape() {
+    if(~shape1.isDownable()) {
+        if(shape1.getTop()=0) {let heightLegal=false;}
+        do lastLineDisappear();
+ 	let shape1=shape2;
+	do shape2.eraseNext();
+          let shape2= Graphics.new(count);
+          do shape1.drawInPanel();
+          do shape2.drawInNext();
+          let count=count+1;
+    }
+      if (direction = 2) { do shape1.moveDown(); }
+      if (direction = 3) //{ if(shape1.isLeftable()) {do shape1.moveLeft();} }
+          {do shape1.moveLeft();}
+      if (direction = 4) //{ if(shape1.isRightable()) {do shape1.moveRight();} }
+          {do shape1.moveRight();}
+      do Sys.wait(10);  
+      return;    
+   }
+
+    method boolean filledLine(int x) {
+	var int tmp, addr, i,j;
+        let i=1;
+	while(i<9) {
+          let j=1;
+          let addr=32*x+16396;
+	  while(j<6) {
+	    let tmp=Memory.peek(addr);
+	    if(~(tmp=-1)) {return false;}
+	    let addr=addr+1;
+            let j=j+1;
+          }
+          let i=i+1;
+          let x=x+1;
+	}
+	return true;
+  }
+
+  method void lastLineDisappear() {
+	var int row, row1, tmp;
+	var int addr1, addr2, i;
+	let row=248;
+	while(~(row<0)) {
+    	    if(filledLine(row)) {
+ 		let row1=row+7;
+		while(row1>7) {
+			let i=1;
+			let addr1=32*row1+16396;
+			while(i<6) {
+			    let addr2=addr1-256;
+			    let tmp=Memory.peek(addr2);
+			    do Memory.poke(addr1,tmp);
+			    let addr1=addr1+1;
+ 			    let i=i+1;
+			}
+			let row1=row1-1;
+		} //while(row1>7)
+		let row1=7;
+                while(~(row1<0)) {
+                    let addr1=32*row1+16396;
+                    let i=1;
+                    while(i<6) {
+                       do Memory.poke(addr1,0);
+		       let addr1=addr1+1;
+ 		       let i=i+1;
+ 	           }
+	           let row1=row1-1;
+                }
+	      let row=row+8;
+	    }  //if(filledLine(row))
+	    let row=row-8;
+	}  //while(~(row<0))
+        return;
+  }
+
+   method void run() {
+      var char key;  // the key currently pressed by the user
+      var boolean exit;
+      let exit = false;
+      while(~exit) {
+
+           while (key = 0) {
+              let key = Keyboard.keyPressed();
+              do moveShape();
+              if(~heightLegal) {let exit=true;}
+           }
+           if (key = 81)  { let exit = true; }     // q key
+           if (key = 133) { let direction = 2; }   // down arrow
+           if (key = 130) { let direction = 3; }   // left arrow
+           if (key = 132) { let direction = 4; }   // right arrow
+           
+           while (~(key = 0)) {
+              let key = Keyboard.keyPressed();
+              do moveShape();
+              if(~heightLegal) {let exit=true;}
+           }
+     }
+     return;
+  }
+}
+

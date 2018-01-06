@@ -1,0 +1,101 @@
+// Implementation of classic arcade game Pong (translated from Python).
+// 
+// Author: Alan Farkas
+// Course: From Nand-To-Tetris-II (Coursera)
+// Assignment: Project 9 (Jack Program)
+//
+// Last Edit: 11/12/2017
+//
+
+/** Implements the game ball. */
+class Ball {
+
+	field int x, y; 		// screen location of the ball's center
+	field int length; 		// ball length, in pixels
+
+
+	/** Constructs a new ball with a given location and size. */
+	constructor Ball new(int startX, int startY, int startlength) {
+		let x = startX;
+		let y = startY;
+		let length = startlength;
+		do display();
+		return this;
+	}
+
+	/** Disposes this ball. */
+	method void dispose() {
+		do Memory.deAlloc(this);
+		return;
+	}
+
+	/** Makes the ball visible. */
+	method void display() {
+		
+		/**
+		var String blank, blanks;
+		
+		let blank = " ";
+		let blanks = "        ";
+
+		do Output.moveCursor(20, 10);
+		do Output.printString(blanks);
+		do Output.moveCursor(20, 10);
+		do Output.printInt(x);
+		do Output.printString(blank);
+		do Output.printInt(y);
+		do Output.println();
+		*/
+
+		do Screen.setColor(true);
+		do draw();
+		
+		//blank.dispose();
+		//blanks.dispose();
+		
+		return;
+	}
+
+	/** Draws the ball (visible / invisible) on the screen. */
+	method void draw() {
+		do Screen.drawRectangle(x, y, x + length, y + length);
+		return;
+	}
+
+	/** Erases the ball from the screen. */
+	method void erase() {
+		do Screen.setColor(false);
+		do draw();
+		return;
+	}
+
+	/** Returns the ball's length. */
+	method int getlength() {
+		return length;
+	}
+
+	/** Returns the ball's horizontal position. */
+	method int getX() {
+		return x;
+	}
+
+	/** Returns the ball's horizontal position. */
+	method int getY() {
+		return y;
+	}
+
+	/** Moves the ball to the new postion. */
+	method void move(int newX, int newY) {
+   
+		// Erase ball from current position	
+		do erase();
+	  
+		// Draw ball in new position
+		let x = newX; 
+		let y = newY;
+		do display();
+	  
+		return;
+	}
+ 
+}

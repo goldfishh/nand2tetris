@@ -1,0 +1,114 @@
+class Segment_2{
+	field boolean moveable;
+	field int x1,y1;
+	field int x2,y2;
+	field int x3,y3;
+	field int x4,y4;
+	field int width;
+	field int label;  //label = 0 => 田 only one
+	constructor Segment_2 new(int w){
+		let moveable = true;
+		let label = 0;
+		let width = w;
+		let x4 = 256;
+		let x3 = x4 - width;
+		let x1 = x3;
+		let x2 = x4;
+		let y1 = width;
+		let y2 = width;
+		let y3 = 0;
+		let y4 = 0;
+		do print_point(true,x1,y1);
+		do print_point(true,x2,y2);
+		do print_point(true,x3,y3);
+		do print_point(true,x4,y4);			
+		return this;
+	}
+	method int get_x(int num){
+		if(num = 1){return x1;}
+		if(num = 2){return x2;}
+		if(num = 3){return x3;}
+		if(num = 4){return x4;}
+		else{return 0;}
+	}
+	method int get_y(int num){
+		if(num = 1){return y1;}
+		if(num = 2){return y2;}
+		if(num = 3){return y3;}
+		if(num = 4){return y4;}	
+		else{return 0;}		
+	}
+	method boolean get_moveable(){
+		return moveable;
+	}
+	method void change_moveable(boolean tmp){
+		let moveable = tmp;
+		return ;		
+	}
+	method int get_label(){
+		return label;
+	}
+	method void be_blank(){
+		do print_point(false,x1,y1);
+		do print_point(false,x2,y2);
+		do print_point(false,x3,y3);
+		do print_point(false,x4,y4);	
+		return ;
+	}
+	method void print_point(boolean flag,int x, int y){
+		do Screen.setColor(flag);
+		if(((x > 127) & (y > -1)) & ((x < 384) & (y < 256))){
+			do Screen.drawRectangle(x,y,x+(width-1),y+(width-1));
+		}
+		return ;
+	}
+	method void move_left(){
+		if((x1 = 128) | (false = moveable)){ return ; }
+		do be_blank();
+		let x1 = x1 - width;
+		let x2 = x2 - width;
+		let x3 = x3 - width;
+		let x4 = x4 - width;
+		do print_point(true,x1,y1);
+		do print_point(true,x2,y2);
+		do print_point(true,x3,y3);
+		do print_point(true,x4,y4);		
+		return ;
+	}
+	method void move_right(){
+		if((x4 = (384 - width)) | (false = moveable)){ return ; }
+		do be_blank();
+		let x1 = x1 + width;
+		let x2 = x2 + width;
+		let x3 = x3 + width;
+		let x4 = x4 + width;
+		do print_point(true,x1,y1);
+		do print_point(true,x2,y2);
+		do print_point(true,x3,y3);
+		do print_point(true,x4,y4);		
+		return ;		
+	}
+	method void move_down(){
+		if(~moveable){ return ; }
+		if(y1 = (256 - width)){
+			let moveable = false;
+			return ;
+		}		
+		do be_blank();
+		let y1 = y1 + width;
+		let y2 = y2 + width;
+		let y3 = y3 + width;
+		let y4 = y4 + width;	
+		do print_point(true,x1,y1);
+		do print_point(true,x2,y2);
+		do print_point(true,x3,y3);
+		do print_point(true,x4,y4);		
+		return ;		
+	}	
+	method void rotate(){
+		return ;
+	}
+	method void dispose(){
+		return ;
+	}
+}

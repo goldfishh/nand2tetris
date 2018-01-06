@@ -1,0 +1,571 @@
+function Cell_Game.new 7
+push constant 6
+call Memory.alloc 1
+pop pointer 0
+push constant 32
+pop this 0
+push constant 32
+pop this 1
+push this 0
+push this 1
+call Math.multiply 2
+pop this 2
+push argument 0
+pop this 4
+push argument 1
+pop this 5
+push this 2
+call Array.new 1
+pop this 3
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push this 2
+lt
+not
+if-goto WHILE_END0
+push local 0
+push this 0
+call Math.divide 2
+pop local 2
+push constant 2
+push this 0
+call Math.multiply 2
+pop local 5
+push constant 2
+push local 2
+call Math.multiply 2
+pop local 1
+push local 0
+push constant 2
+call Math.multiply 2
+pop local 2
+push local 2
+push local 5
+call Math.divide 2
+pop local 3
+push local 3
+push local 5
+call Math.multiply 2
+pop local 4
+push local 2
+push local 4
+sub
+pop local 6
+push local 0
+push this 3
+add
+push local 1
+push local 6
+call Cell.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push pointer 0
+return
+function Cell_Game.single_move 3
+push argument 0
+pop pointer 0
+push constant 0
+pop local 0
+label WHILE_EXP0
+push this 2
+push local 0
+gt
+not
+if-goto WHILE_END0
+push constant 0
+pop local 1
+push local 0
+push this 0
+push constant 1
+add
+sub
+push constant 0
+gt
+push local 0
+push this 0
+push constant 1
+add
+sub
+push constant 0
+eq
+or
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 0
+push this 0
+push constant 1
+add
+sub
+push this 3
+add
+pop pointer 1
+push that 0
+pop local 2
+push local 2
+call Cell.get_live 1
+push constant 0
+not
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push local 1
+push constant 1
+add
+pop local 1
+label IF_FALSE1
+label IF_FALSE0
+push local 0
+push this 0
+sub
+push constant 0
+gt
+push local 0
+push this 0
+sub
+push constant 0
+eq
+or
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push local 0
+push this 0
+sub
+push this 3
+add
+pop pointer 1
+push that 0
+pop local 2
+push local 2
+call Cell.get_live 1
+push constant 0
+not
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push local 1
+push constant 1
+add
+pop local 1
+label IF_FALSE3
+label IF_FALSE2
+push local 0
+push this 0
+push constant 1
+sub
+sub
+push constant 0
+gt
+push local 0
+push this 0
+push constant 1
+sub
+sub
+push constant 0
+eq
+or
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push local 0
+push this 0
+push constant 1
+sub
+sub
+push this 3
+add
+pop pointer 1
+push that 0
+pop local 2
+push local 2
+call Cell.get_live 1
+push constant 0
+not
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push local 1
+push constant 1
+add
+pop local 1
+label IF_FALSE5
+label IF_FALSE4
+push local 0
+push constant 1
+sub
+push constant 0
+gt
+push local 0
+push constant 1
+sub
+push constant 0
+eq
+or
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push local 0
+push constant 1
+sub
+push this 3
+add
+pop pointer 1
+push that 0
+pop local 2
+push local 2
+call Cell.get_live 1
+push constant 0
+not
+eq
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push local 1
+push constant 1
+add
+pop local 1
+label IF_FALSE7
+label IF_FALSE6
+push local 0
+push constant 1
+add
+push this 2
+lt
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push local 0
+push constant 1
+add
+push this 3
+add
+pop pointer 1
+push that 0
+pop local 2
+push local 2
+call Cell.get_live 1
+push constant 0
+not
+eq
+if-goto IF_TRUE9
+goto IF_FALSE9
+label IF_TRUE9
+push local 1
+push constant 1
+add
+pop local 1
+label IF_FALSE9
+label IF_FALSE8
+push local 0
+push this 0
+push constant 1
+sub
+add
+push this 2
+lt
+if-goto IF_TRUE10
+goto IF_FALSE10
+label IF_TRUE10
+push local 0
+push this 0
+push constant 1
+sub
+add
+push this 3
+add
+pop pointer 1
+push that 0
+pop local 2
+push local 2
+call Cell.get_live 1
+push constant 0
+not
+eq
+if-goto IF_TRUE11
+goto IF_FALSE11
+label IF_TRUE11
+push local 1
+push constant 1
+add
+pop local 1
+label IF_FALSE11
+label IF_FALSE10
+push local 0
+push this 0
+add
+push this 2
+lt
+if-goto IF_TRUE12
+goto IF_FALSE12
+label IF_TRUE12
+push local 0
+push this 0
+add
+push this 3
+add
+pop pointer 1
+push that 0
+pop local 2
+push local 2
+call Cell.get_live 1
+push constant 0
+not
+eq
+if-goto IF_TRUE13
+goto IF_FALSE13
+label IF_TRUE13
+push local 1
+push constant 1
+add
+pop local 1
+label IF_FALSE13
+label IF_FALSE12
+push local 0
+push this 0
+push constant 1
+add
+add
+push this 2
+lt
+if-goto IF_TRUE14
+goto IF_FALSE14
+label IF_TRUE14
+push local 0
+push this 0
+push constant 1
+add
+add
+push this 3
+add
+pop pointer 1
+push that 0
+pop local 2
+push local 2
+call Cell.get_live 1
+push constant 0
+not
+eq
+if-goto IF_TRUE15
+goto IF_FALSE15
+label IF_TRUE15
+push local 1
+push constant 1
+add
+pop local 1
+label IF_FALSE15
+label IF_FALSE14
+push local 1
+push this 4
+eq
+if-goto IF_TRUE16
+goto IF_FALSE16
+label IF_TRUE16
+push local 0
+push this 3
+add
+pop pointer 1
+push that 0
+pop local 2
+push local 2
+call Cell.set_burn 1
+pop temp 0
+goto IF_END16
+label IF_FALSE16
+push local 1
+push this 5
+eq
+if-goto IF_TRUE17
+goto IF_FALSE17
+label IF_TRUE17
+push local 0
+push this 3
+add
+pop pointer 1
+push that 0
+pop local 2
+push local 2
+call Cell.set_live 1
+pop temp 0
+goto IF_END17
+label IF_FALSE17
+push local 0
+push this 3
+add
+pop pointer 1
+push that 0
+pop local 2
+push local 2
+call Cell.set_die 1
+pop temp 0
+label IF_END17
+label IF_END16
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push argument 1
+call Sys.wait 1
+pop temp 0
+push constant 0
+return
+function Cell_Game.auto_slow 2
+push argument 0
+pop pointer 0
+push constant 0
+not
+pop local 0
+label WHILE_EXP0
+push local 0
+not
+if-goto WHILE_END0
+push pointer 0
+push constant 2
+call Cell_Game.single_move 2
+pop temp 0
+call KeyBoard.KeyPressed 0
+pop local 1
+push local 1
+push constant 27
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+pop local 0
+label IF_FALSE0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function Cell_Game.auto_fast 2
+push argument 0
+pop pointer 0
+push constant 0
+not
+pop local 0
+label WHILE_EXP0
+push local 0
+not
+if-goto WHILE_END0
+push pointer 0
+push constant 1
+call Cell_Game.single_move 2
+pop temp 0
+call KeyBoard.KeyPressed 0
+pop local 1
+push local 1
+push constant 27
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+pop local 0
+label IF_FALSE0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function Cell_Game.choose_tuan 1
+push argument 0
+pop pointer 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push constant 512
+push this 3
+add
+pop pointer 1
+push that 0
+pop local 0
+push local 0
+call Cell.set_burn 1
+pop temp 0
+push constant 513
+push this 3
+add
+pop pointer 1
+push that 0
+pop local 0
+push local 0
+call Cell.set_burn 1
+pop temp 0
+push constant 514
+push this 3
+add
+pop pointer 1
+push that 0
+pop local 0
+push local 0
+call Cell.set_burn 1
+pop temp 0
+push constant 517
+push this 3
+add
+pop pointer 1
+push that 0
+pop local 0
+push local 0
+call Cell.set_burn 1
+pop temp 0
+push constant 519
+push this 3
+add
+pop pointer 1
+push that 0
+pop local 0
+push local 0
+call Cell.set_burn 1
+pop temp 0
+push constant 51
+push this 3
+add
+pop pointer 1
+push that 0
+pop local 0
+push local 0
+call Cell.set_burn 1
+pop temp 0
+push constant 59
+push this 3
+add
+pop pointer 1
+push that 0
+pop local 0
+push local 0
+call Cell.set_burn 1
+pop temp 0
+push constant 0
+return
+function Cell_Game.reset 0
+push argument 0
+pop pointer 0
+call Cell.set_blank 0
+pop temp 0
+push constant 0
+return
+function Cell_Game.dispose 0
+push argument 0
+pop pointer 0
+push this 3
+call Array.dispose 1
+pop temp 0
+push constant 0
+return

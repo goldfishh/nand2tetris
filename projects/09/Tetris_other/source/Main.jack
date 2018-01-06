@@ -1,0 +1,16 @@
+/*This is a simple Tetris game.
+  I have problem in judging whether a shape could move down or not, so I pick just two shapes at last.
+  Also, the methods which judge whether to move left or right are omitted.
+*/
+
+//Initializes a new Tetris game and starts running it. 
+class Main {
+    function void main() {
+	var Tetris tetris;
+	let tetris=Tetris.new();
+	do tetris.run();
+	do tetris.dispose();
+        return;
+    }
+}
+

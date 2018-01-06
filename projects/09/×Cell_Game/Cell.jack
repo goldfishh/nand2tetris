@@ -1,0 +1,70 @@
+//cd C:\Users\goldfish\Desktop\nand2tetris\projects\09\Cell_Game
+//C:\Users\goldfish\Desktop\nand2tetris\tools\JackCompiler.bat
+class Cell{
+	field int x;
+	field int y;
+	field boolean is_live;
+	
+	constructor Cell new(int xx,int yy){
+		let x = xx;
+		let y = yy;
+		let is_live = false;
+		return this;
+	}
+	method boolean get_live(){
+		return is_live;
+	}
+	method void set_burn(){
+		if(false = is_live){
+			let is_live = true;
+			do Cell.draw_64pixels(true,x, y);
+		}
+		return ;		
+	}
+	
+	method void set_live(){
+		//do nothing
+		return ;		
+	}
+	
+	method void set_die(){
+		if(true = is_live){
+			let is_live = false;
+			do Cell.draw_64pixels(false,x, y);
+		}
+		return ;		
+	}
+	
+	function void set_blank(){
+		do Screen.clearScreen();
+		return ;		
+	}
+	
+	//if flag = true then it will draw them generally,
+	//else if flag = false, it will erase them.
+	function void draw_4pixels(boolean flag, int xx, int yy){
+		//do Screen.setColor(flag);
+		//do Screen.drawPixel(xx, yy);
+		//do Screen.drawPixel(xx+1, yy);
+		//do Screen.drawPixel(xx, yy+1);
+		//do Screen.drawPixel(xx+1, yy+1);
+		return ;		
+	}
+	function void draw_64pixels(boolean flag, int xx, int yy){
+		//do Cell.draw_4pixels(flag,xx, yy);
+		//do Cell.draw_4pixels(flag,xx+2, yy);
+		//do Cell.draw_4pixels(flag,xx, yy+2);
+		//do Cell.draw_4pixels(flag,xx+2, yy+2);
+		do Screen.drawRectangle(xx,yy,xx+7,yy+7);
+		return ;			
+	}
+	function void set_random(){
+		// go on to think...
+		return ;	
+	}
+	
+	method void dispose(){
+		//do nothing
+		return ;		
+	}	
+}

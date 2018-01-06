@@ -1,0 +1,180 @@
+class Cell_Game{
+	field int sum_Xcell;
+	field int sum_Ycell;
+	field int total_Cell;
+	field Array Cell_array;
+	field int burn_num;
+	field int live_num;
+	
+	constructor Cell_Game new(int b_num, int l_num){
+		var int i;
+		var int x;
+		var int tmp1;
+		var int tmp2;
+		var int tmp3;
+		var int tmp4;
+		var int y;
+		let sum_Xcell = 32;
+		let sum_Ycell = 32;
+		let total_Cell = Math.multiply(sum_Xcell,sum_Ycell);
+		let burn_num = b_num;
+		let live_num = l_num;
+		let Cell_array = Array.new(total_Cell);
+		let i = 0;
+		while(i < total_Cell){
+			// x = 2 * (i / 128)
+			// y = (2 * i) mod 256
+			// tmp1 = i / 128
+			let tmp1 = Math.divide(i,sum_Xcell);
+			// tmp4 = 2 * 128
+			let tmp4 = Math.multiply(2,sum_Xcell);
+			// x = int(i / 128) * 2
+			let x = Math.multiply(2,tmp1);
+			// tmp1 = 2 * i
+			let tmp1 = Math.multiply(i,2);
+			// tmp2 = int((2*i)/(2*128))
+			let tmp2 = Math.divide(tmp1,tmp4);
+			// tmp3 = (i/128)*(2*128)
+			let tmp3 = Math.multiply(tmp2,tmp4);
+			let y = tmp1 - tmp3;
+			let Cell_array[i] = Cell.new(x,y);
+			let i = i + 1;
+		}
+		return this;
+	}
+	
+	method void single_move(int duration){
+		var int i;
+		var int surround_live_cell;
+		var Cell ptr_cell;
+		let i = 0;
+		while(total_Cell > i){
+			let surround_live_cell = 0;
+			if(((i - (sum_Xcell+1)) > 0) | ((i - (sum_Xcell+1)) = 0)){
+				let ptr_cell = Cell_array[i-(sum_Xcell+1)];
+				if(ptr_cell.get_live() = true){
+					let surround_live_cell = (surround_live_cell + 1);
+				}
+			}
+				if(((i - sum_Xcell) > 0) | ((i - sum_Xcell) = 0)){
+					let ptr_cell = Cell_array[i-sum_Xcell];
+					if(ptr_cell.get_live() = true){
+						let surround_live_cell = (surround_live_cell + 1);
+					}
+				}
+				if(((i - (sum_Xcell-1)) > 0) | ((i - (sum_Xcell-1)) = 0)){
+					let ptr_cell = Cell_array[i-(sum_Xcell-1)];
+					if(ptr_cell.get_live() = true){
+						let surround_live_cell = (surround_live_cell + 1);
+					}
+				}
+				if(((i - 1) > 0) | ((i - 1) = 0)){
+					let ptr_cell = Cell_array[i-1];
+					if(ptr_cell.get_live() = true){
+						let surround_live_cell = (surround_live_cell + 1);
+					}
+				}
+				if((i + 1) < total_Cell){
+					let ptr_cell = Cell_array[i+1];
+					if(ptr_cell.get_live() = true){
+						let surround_live_cell = (surround_live_cell + 1);
+					}
+				}
+				if((i + (sum_Xcell-1)) < total_Cell){
+					let ptr_cell = Cell_array[i+(sum_Xcell-1)];
+					if(ptr_cell.get_live() = true){
+						let surround_live_cell = (surround_live_cell + 1);
+					}
+				}
+				if((i + sum_Xcell) < total_Cell){
+					let ptr_cell = Cell_array[i+sum_Xcell];
+					if(ptr_cell.get_live() = true){
+						let surround_live_cell = (surround_live_cell + 1);
+					}
+				}
+				if((i + (sum_Xcell+1)) < total_Cell){
+					let ptr_cell = Cell_array[i+(sum_Xcell+1)];
+					if(ptr_cell.get_live() = true){
+						let surround_live_cell = (surround_live_cell + 1);
+					}
+				}
+				if(surround_live_cell = burn_num){
+					let ptr_cell = Cell_array[i];
+					do ptr_cell.set_burn();
+				}
+				else{
+					if(surround_live_cell = live_num){
+						let ptr_cell = Cell_array[i];
+						do ptr_cell.set_live();
+					}
+					else{
+						let ptr_cell = Cell_array[i];
+						do ptr_cell.set_die();
+					}
+				}
+				let i = i + 1;		
+			}
+		//}
+		do Sys.wait(duration);
+		return;		
+	}
+	
+	method void auto_slow(){
+		var boolean flag;
+		var char now_press;
+		let flag = true;
+		while(flag){
+			do single_move(2);
+			let now_press = KeyBoard.KeyPressed();
+			if(now_press = 27){
+				let flag = false;
+			}
+		}
+		return;		
+	}
+	
+	method void auto_fast(){
+		var boolean flag;
+		var char now_press;
+		let flag = true;
+		while(flag){
+			do single_move(1);
+			let now_press = KeyBoard.KeyPressed();
+			if(now_press = 27){
+				let flag = false;
+			}
+		}
+		return;		
+	}
+	
+	method void choose_tuan(int choice_num){
+		var Cell ptr;
+		do Screen.setColor(true);
+		let ptr = Cell_array[512];
+		do ptr.set_burn();
+		let ptr = Cell_array[513];
+		do ptr.set_burn();
+		let ptr = Cell_array[514];
+		do ptr.set_burn();		
+		let ptr = Cell_array[517];
+		do ptr.set_burn();	
+		let ptr = Cell_array[519];
+		do ptr.set_burn();
+		let ptr = Cell_array[51];
+		do ptr.set_burn();	
+		let ptr = Cell_array[59];
+		do ptr.set_burn();			
+		return;
+	}
+	
+	method void reset(){
+		do Cell.set_blank();
+		return;
+	}
+	
+	method void dispose(){
+		do Cell_array.dispose();
+		return ;
+	}
+	
+}

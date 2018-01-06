@@ -1,0 +1,380 @@
+// Implementation of classic arcade game Pong (translated from Python).
+// 
+// Author: Alan Farkas
+// Course: From Nand-To-Tetris-II (Coursera)
+// Assignment: Project 9 (Jack Program)
+//
+// Last Edit: 11/12/2017
+//
+
+/**
+ * Game Board
+ *
+ */
+class Board {
+
+	field Ball ball;							// Ball
+	field Paddle paddle1, paddle2;				// Paddles	
+	field int ballAccelPct;						// Ball acceleration percent
+	field int ballLength;						// Ball length
+	field int ballMaxX, ballMaxY;				// Maximum safe ball position
+	field int ballMinVel, ballMaxVel;			// Min/Max ball velocities
+	field int ballVelX, ballVelY;				// Ball velocity
+	field int boardWidth, boardHeight;			// Board height and width
+	field int halfBoardWidth, halfBoardHeight;	// Half board height and width
+	field int padWidth, padHeight, padSpeed;	// Paddle height, width, and speed
+	field int halfPadWidth, halfPadHeight;		// Half pad height and width
+	field int paddle1X, paddle1Y;				// Paddle 1 - initial X,Y position
+	field int paddle2X, paddle2Y;				// Paddle 2 - initial X,Y position
+	field int paddle1Vel, paddle2Vel;			// Paddle 1 and 2 velocities
+	field int scoreRow, headerRow;				// Row containing player scores
+	field int header1Pos, header2Pos;			// Header start positions
+	field int score1Pos, score2Pos;				// Score start positions
+	field int score1, score2, winningScore;		// Human and computer scores
+	field int waitTime;							// Interval (in milliseconds) between screen updates
+	field String blank, blanks;					// Useful strings
+	field boolean isDemoMode, isCompMode;		// Game modes (demo and player vs. computer)
+	field boolean isGameOver;					// Indicates that game is over
+	field boolean left, right;					// Ball directions
+
+	
+	/** Constructs a new game board with a given location and size. */
+	constructor Board new(int inBoardWidth, int inBoardHeight, int inBallLength, int inPadWidth, int inPadHeight, int inWaitTime, int inWinningScore) {
+	
+		// Initialization
+		let ballAccelPct = 150;
+		let blank = " ";
+		let blanks = "        ";
+		let boardWidth = inBoardWidth;
+		let boardHeight = inBoardHeight;
+		let halfBoardWidth = boardWidth / 2;
+		let halfBoardHeight = boardHeight / 2;
+		let ballLength = inBallLength;
+		let padWidth = 7;
+		let padHeight = 45;
+		let padSpeed = 1;
+		let halfPadWidth = padWidth / 2;
+		let halfPadHeight = padHeight / 2;
+		let left = false;
+		let right = true;
+		let paddle1X = 0;
+		let paddle1Y = halfBoardHeight - halfPadHeight;
+		let paddle2X = boardWidth - 1 - padWidth;
+		let paddle2Y = halfBoardHeight - halfPadHeight;
+		let waitTime = inWaitTime;
+		let ballMaxX = boardWidth - ballLength - padWidth - 1;
+		let ballMaxY = boardHeight - ballLength - 2;
+		let ballMinVel = -100;
+		let ballMaxVel = 100;
+		let headerRow = 0;
+		let scoreRow = 2;
+		let header1Pos = 12; let header2Pos = 45;
+		let score1Pos = 13; let score2Pos = 46;
+		let winningScore = 11;
+
+		
+		// Create ball and paddles
+		let ball = Ball.new(halfBoardWidth, halfBoardHeight, ballLength);
+		let paddle1 = Paddle.new(paddle1X, paddle1Y, padWidth, padHeight, boardHeight);
+		let paddle2 = Paddle.new(paddle2X, paddle2Y, padWidth, 65, boardHeight);
+		
+		return this;
+   }
+
+	/** check if ball has collided with paddle */    
+	method boolean ballAndPaddleCollided(Ball ball, Paddle paddle) {
+		var int ballTop, ballBottom, paddleTop, paddleBottom;
+		
+		let ballTop = ball.getY() - ball.getlength();
+		let ballBottom = ball.getY() + ball.getlength();
+		let paddleTop = paddle.getY();
+		let paddleBottom = paddle.getY() + paddle.getHeight();
+    
+		// Is the top of ball between the paddle top and bottom?
+		if ( (paddleTop < ballTop) & (paddleBottom > ballTop) ) {
+			return true;
+		} else {
+			// Else, is the bottom of ball between the paddle top and bottom?
+			if ( (paddleTop < ballBottom) & (paddleBottom > ballBottom) ) {
+				return true;
+			} else {
+				// No collision
+				return false;
+			}
+		}
+	}
+    
+	/** Display score */
+	method void displayScore(int row, int startPos, int playerNo, int score) {
+		
+		var String blanks, text;
+		
+		// Erase previous score
+		let blanks = "  ";
+		do Output.moveCursor(row, startPos);
+		do Output.printString(blanks);
+		
+		// Display new score
+		/**
+		// Diplaying text seems to cause a memory leak
+		do Output.moveCursor(row, startPos);
+		let text = "Player";
+		do Output.printString(text);
+		do Output.printInt(playerNo);
+		let text = ": ";
+		do Output.printString(text);
+		*/
+		do Output.printInt(score);
+
+		// Dispose of strings
+		do blanks.dispose();
+		//do text.dispose();
+		
+		return;
+	}
+	
+	/** Disposes this board. */
+	method void dispose() {
+	    do ball.dispose();
+		do paddle1.dispose();
+		do paddle2.dispose();
+		do blank.dispose();
+		do blanks.dispose();
+		
+		do Memory.deAlloc(this);
+		return;
+	}
+
+	/** Start a new game */
+	method void newGame() {
+    
+		// Clear screen
+		do Screen.clearScreen();
+		
+		// Reset game modes, scores & paddle positions
+		let isGameOver = false;
+		let isDemoMode = false;
+		let isCompMode = true;				// Start game in player vs computer mode
+		let score1 = 0;
+		let score2 = 0;
+		let paddle1Vel = 0;
+		let paddle2Vel = 0;
+		
+		// Display Header
+	    do Output.moveCursor(headerRow, 3);
+	    do Output.printString("Scores:");
+		do Output.moveCursor(headerRow, header1Pos);
+	    do Output.printString("Player 1");
+		do Output.moveCursor(headerRow, header2Pos);
+	    do Output.printString("Player 2");
+		
+		// Display paddles
+		do paddle1.move(paddle1Y);
+		do paddle2.move(paddle2Y);
+		
+		// Spawn ball in the middle of the screen - going right
+		do spawnBall(right);
+
+		// Run game
+		do run();
+		
+		return;
+	}
+		
+	/** Produces a ball in the middle of the screen going in the specified direction. */
+	method void spawnBall(int direction) {
+    
+		var int scale;			// Ball velocity scaling factor
+
+		// Initialize ball velocity
+		let scale = 50;
+		if (direction) {	
+			// RIGHT - Send the ball upwards and to the right
+			let ballVelX = 180 / scale; 	//	ball_vel[0] = random.randrange(120, 240 /scale
+			let ballVelY = -70 / scale;    	//  ball_vel[1] = -random.randrange(60, 80) /scale
+		} else {
+			// LEFT - Send the ball upwards and to the left
+			let ballVelX = -180 / scale; 	//	ball_vel[0] = -random.randrange(120, 240 /scale
+			let ballVelY = -70 / scale;    //  ball_vel[1] = -random.randrange(60, 80) /scale
+		}
+
+		// Spawn ball in middle of table
+		do ball.move(halfBoardWidth, halfBoardHeight);
+
+		return;
+	}
+
+	/** Runs the game */
+	method void run() {
+		
+		var int key;					// Key press
+		
+		// Game is over when winning score is reached or user pressedsthe 
+		// escape key.
+		while (~isGameOver) {
+	  
+			// Check for winning score
+			if ( (score1 > (winningScore - 1)) | (score2 > (winningScore - 1)) ) {
+				let isGameOver = true;
+			} else {
+				// Check for key press
+                let key = Keyboard.keyPressed();
+				if (key = 131) {
+					// Up arrow
+					let paddle2Vel = -padSpeed * 2; 
+				} else {
+					if (key = 133) {
+						// Up arrow
+						let paddle2Vel = padSpeed * 2; 
+					} else {
+						if (key = 0) {
+							// Key up
+							let paddle2Vel = 0;
+						} else {
+							if (key = 140) {
+								// Escape key
+								let isGameOver = true;
+							}
+						}
+					}
+				}
+			}
+			
+
+			if (isGameOver) {
+				// Game over 
+				do Output.moveCursor(12, 28);
+				do Output.printString("Game Over!");
+			} else {
+				// Update board
+				do update();
+			}
+
+			// Wait a bit... (force screen refresh)
+			do Sys.wait(waitTime);
+
+		}
+						
+		return;
+	}
+	
+	/** Updates the board state */
+	method void update() {
+	
+		var int ballX, ballY;				// Ball position
+		var int targetPadY;					// Target computer-controlled pad position
+		var String score1Msg, score2Msg;	// Miscellaneous strings
+		
+		
+		// Update ball position
+		let ballX = ball.getX() + ballVelX;
+		let ballX = Math.min(ballX, boardWidth - ballLength - 1);
+		let ballX = Math.max(ballX, 1);
+		let ballY = ball.getY() + ballVelY; 
+ 
+		// Check ball's x coordinates
+		// Move ball to new position
+		do ball.move(ballX, ballY);
+             
+		// Move computer-controlled paddle(s)
+		if (isDemoMode | isCompMode) {
+			// Move computer's paddle(s) towards current ball position
+			let paddle1Y = paddle1.getY();
+			let targetPadY = ballY - halfPadHeight;
+			if (targetPadY > paddle1Y) {
+				do paddle1.move(padSpeed);
+				if (isDemoMode) {
+					// Demo mode - auto move right paddle
+					do paddle2.move(padSpeed);
+				} else {
+					// Non-Demo mode - apply user's key press
+					do paddle2.move(paddle2Vel);
+				}
+			} else {
+				if (targetPadY < paddle1Y) {
+					do paddle1.move(-padSpeed);
+					if (isDemoMode) {
+						// Demo mode - auto move right paddle
+						do paddle2.move(-padSpeed);
+					} else {
+						// Non-Demo mode - apply user's key press
+						do paddle2.move(paddle2Vel);
+					}
+				}
+			}
+		}
+        
+			
+		// Draw mid line and gutters
+		do Screen.setColor(true);
+		do Screen.drawLine(halfBoardWidth, 0, halfBoardWidth, boardHeight -1);
+		do Screen.drawLine(padWidth, 0, padWidth, boardHeight - 1);
+		do Screen.drawLine(boardWidth - padWidth, 0, boardWidth - padWidth, boardHeight - 1);
+ 
+		// Determine whether ball collides with the top or bottom walls
+		if ( ~((ballY - ballLength) > 0) | (ballY > ballMaxY) ) {
+			// Reverse vertical velocity & exit
+			let ballVelY = -ballVelY;
+			return;
+		}
+		
+		// Determine whether ball has collided with the left or right wall
+		if (ballX < padWidth) { 
+		
+			// LEFT wall collision - now check whether ball has collided paddle
+			if (ballAndPaddleCollided(ball, paddle1)) {
+				// Ball has collided with paddle - reverse ball's horizontal velocity
+				// and increase ball's vertical velocity by acceleration factor.
+				let ballVelX = (-ballVelX * ballAccelPct) / 100;
+				let ballVelY = (ballVelY * ballAccelPct) / 100;
+			} else {
+				// LEFT gutter collision - give a point to Player 2 and spawn ball
+				// to the RIGHT.
+				let score2 = score2 + 1;
+				do spawnBall(right);
+			}
+			
+		} else {
+		
+			if ( ballX > ballMaxX) {
+				
+				// RIGHT wall collision - now check whether ball has collided with paddle
+				if (ballAndPaddleCollided(ball, paddle2)) {
+					// Ball has collided with paddle - reverse ball's horizontal velocity
+					// and increase ball's vertical velocity by acceleration factor.
+					let ballVelX = (-ballVelX * ballAccelPct) / 100;
+					let ballVelY = (ballVelY * ballAccelPct) / 100;
+				} else {
+					// Right gutter collision - give a point to Player 1 and spawn ball
+					// to the LEFT.
+					let score1 = score1 + 1;
+					do spawnBall(left);
+				}
+			}
+		}
+          	
+		// Keep velocities within defined boundaries
+		let ballVelX = Math.min(ballVelX, ballMaxVel);
+		let ballVelX = Math.max(ballVelX, ballMinVel);
+		let ballVelY = Math.min(ballVelY, ballMaxVel);
+		let ballVelY = Math.max(ballVelY, ballMinVel);
+		
+        
+		// Display Header
+		/**
+	    do Output.moveCursor(headerRow, 3);
+	    do Output.printString("Scores:");
+		do Output.moveCursor(headerRow, header1Pos);
+	    do Output.printString("Player 1");
+		do Output.moveCursor(headerRow, header2Pos);
+	    do Output.printString("Player 2");
+		*/
+
+		// Display scores
+		do displayScore(scoreRow, score1Pos, 1, score1);
+		do displayScore(scoreRow, score2Pos, 2, score2);		
+				
+		return;
+	}
+	
+}

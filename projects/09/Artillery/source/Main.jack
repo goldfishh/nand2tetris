@@ -1,0 +1,127 @@
+/**
+ * This is a simple game that simulates projectile trajectory
+ * there is a castle drawn on the field. Pressing space bar shows the 
+ * path of the projectile.
+ *
+ * the object is to have your projectile intersect (collide) with the castle;
+ * 
+ * controls:
+ * q: quit the program
+ * up: increase projectile velocity
+ * down: decrease projectile velocity
+ * left: increase angle of projectile launch
+ * right: decrease angle of projectile launch
+ * space: fire
+*/
+class Main {
+	function void main() {
+	
+		var int r, x, y, a_x, b_y, g, xtravel, sin, cos, ytravel, c, tx, ty, levels, tries, score;
+		var Line aline, bline, cline, drawLine;
+		var Levels game;
+		var char key;
+		var boolean actionTaken, exit;
+		var Vector vector;
+		var int px, py, opx, opy, t;
+		let levels = 1;
+		let r = 15;
+		let x = 20; 
+		let y = 236; 
+		let a_x = 3;
+		let b_y = Math.sqrt((r*r) - (a_x*a_x));
+		let aline = Line.new(x, y, x+a_x, y);
+		let bline = Line.new(x+a_x, y, x+a_x, y-b_y);
+		let cline = Line.new(x, y, x+a_x, y-b_y);
+		let drawLine = Line.new(0,0,0,0);
+		let key = 0;
+		let actionTaken = false;
+		let vector = Vector.new(a_x,b_y);
+		let exit = false;
+		let game = Levels.new();
+		let tries = 0;
+		
+		while(~exit) {
+			do Output.moveCursor(22, 0);
+			do Output.printInt(tries);
+			
+			do aline.draw();
+			do bline.draw();
+			do cline.draw();
+			
+			let px = x + a_x;
+			let py = y - b_y;
+			let t = 1;
+			do vector.move(a_x, b_y);
+			do drawLine.move(x, y, x+a_x, y-b_y);
+			do game.drawLevel(1);
+			
+			while( (actionTaken) | (key=0) ){
+				let key = Keyboard.keyPressed();
+				if(key = 0) { let actionTaken = false; }
+			}
+			do Screen.clearScreen();
+			do Output.moveCursor(22, 0);
+			do Output.printInt(tries);
+			
+			if( (key = 130) & (a_x > 0) ) { 
+				let a_x = a_x - 1;
+				let b_y = Math.sqrt((r*r) - (a_x*a_x));
+				do aline.move(x, y, x+a_x, y);
+				do bline.move(x+a_x, y, x+a_x, y-b_y);
+				do cline.move(x, y, x+a_x, y-b_y);
+			}
+			if( (key = 132) & (a_x < r )) {
+				let a_x = a_x + 1;
+				let b_y = Math.sqrt((r*r) - (a_x*a_x));
+				do aline.move(x, y, x+a_x, y);
+				do bline.move(x+a_x, y, x+a_x, y-b_y);
+				do cline.move(x, y, x+a_x, y-b_y);
+			}
+			if( (key = 131) & ( r < 100 )) {
+				let r = r + 1;
+				let b_y = Math.sqrt((r*r) - (a_x*a_x));
+				do aline.move(x, y, x+a_x, y);
+				do bline.move(x+a_x, y, x+a_x, y-b_y);
+				do cline.move(x, y, x+a_x, y-b_y);
+			}
+			if( (key = 133) & ( r > 1 )) {
+				let r = r - 1;
+				let b_y = Math.sqrt((r*r) - (a_x*a_x));
+				do aline.move(x, y, x+a_x, y);
+				do bline.move(x+a_x, y, x+a_x, y-b_y);
+				do cline.move(x, y, x+a_x, y-b_y);
+			} 
+			if(key = 32) {
+
+				while(~drawLine.crossesY(300)) {
+					let opx = px;
+					let opy = py;
+					let sin = vector.sin(t);
+					let cos = vector.cos(t);
+					let g = (5 * t * t / 2);
+
+					// made this equation up to emulate air resistance. not based on actual physics
+					//do Output.printInt(drawLine.dX());
+					//do Output.println();
+					let xtravel = cos;
+
+					let ytravel = sin - g;
+					//if( (ytravel > 27)) { let ytravel = 28; }
+					//if( (ytravel < (-27))) { let ytravel = -28; }
+					let px = px + xtravel;
+					let py = py - ytravel;
+					do drawLine.move(opx, opy, px, py);
+					//do drawLine.print();
+					do drawLine.draw();
+
+					let t = t + 1;
+				}
+				let tries = tries + 1;
+			}
+			if (key = 81)  { let exit = true; }     // q key
+			if(~(key = 0)) { let actionTaken = true; }
+		}
+
+		return;
+	}
+}

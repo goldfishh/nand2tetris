@@ -1,0 +1,161 @@
+function Bat.new 0
+  push argument 1
+  pop static 0
+  push argument 2
+  pop static 1
+  push argument 3
+  pop static 2
+  push argument 4
+  pop static 3
+  push constant 2
+  pop static 4
+  call Bat.show 1
+  push argument 0
+  return
+function Bat.dispose 0
+  push argument 0
+  call Memory.deAlloc 1
+  return
+function Bat.show 0
+  push constant 1
+  neg
+  call Screen.setColor 1
+  call Bat.draw 1
+  return
+function Bat.hide 0
+  push constant 0
+  call Screen.setColor 1
+  call Bat.draw 1
+  return
+function Bat.draw 0
+  push static 0
+  push static 1
+  push static 0
+  push static 2
+  add
+  push static 1
+  push static 3
+  add
+  call Screen.drawRectangle 4
+  return
+function Bat.setDirection 0
+  push argument 1
+  pop static 4
+  return
+function Bat.getLeft 0
+  push static 0
+  return
+function Bat.getRight 0
+  push static 0
+  push static 2
+  add
+  return
+function Bat.setWidth 0
+  call Bat.hide 1
+  push argument 1
+  pop static 2
+  call Bat.show 1
+  return
+function Bat.move 0
+  push static 4
+  push constant 1
+  eq
+  if-goto if_0
+  goto else_0
+label if_0
+  push static 0
+  push constant 4
+  sub
+  pop static 0
+  push static 0
+  push constant 0
+  lt
+  if-goto if_1
+  goto else_1
+label if_1
+  push constant 0
+  pop static 0
+  goto end_if_1
+label else_1
+label end_if_1
+  push constant 0
+  call Screen.setColor 1
+  push static 0
+  push static 2
+  add
+  push constant 1
+  add
+  push static 1
+  push static 0
+  push static 2
+  add
+  push constant 4
+  add
+  push static 1
+  push static 3
+  add
+  call Screen.drawRectangle 4
+  push constant 1
+  neg
+  call Screen.setColor 1
+  push static 0
+  push static 1
+  push static 0
+  push constant 3
+  add
+  push static 1
+  push static 3
+  add
+  call Screen.drawRectangle 4
+  goto end_if_0
+label else_0
+  push static 0
+  push constant 4
+  add
+  pop static 0
+  push static 0
+  push static 2
+  add
+  push constant 511
+  gt
+  if-goto if_2
+  goto else_2
+label if_2
+  push constant 511
+  push static 2
+  sub
+  pop static 0
+  goto end_if_2
+label else_2
+label end_if_2
+  push constant 0
+  call Screen.setColor 1
+  push static 0
+  push constant 4
+  sub
+  push static 1
+  push static 0
+  push constant 1
+  sub
+  push static 1
+  push static 3
+  add
+  call Screen.drawRectangle 4
+  push constant 1
+  neg
+  call Screen.setColor 1
+  push static 0
+  push static 2
+  add
+  push constant 3
+  sub
+  push static 1
+  push static 0
+  push static 2
+  add
+  push static 1
+  push static 3
+  add
+  call Screen.drawRectangle 4
+label end_if_0
+  return

@@ -1,0 +1,377 @@
+//cd C:\Users\goldfish\Desktop\nand2tetris\projects\09\Tetris
+//C:\Users\goldfish\Desktop\nand2tetris\tools\JackCompiler.bat
+class Game{
+	//play point
+	field int point;
+	// next predict segment
+	field int next;
+	field boolean endofgame;
+	field Array figure;
+	// the rows have cleared up now
+	field int rows;
+	field int width;
+	field Segment_1 now1;	
+	field Segment_2 now2;	
+	
+	constructor Game new(){
+		var int i;
+		let width = 16;
+		let i = 0;
+		let point = 0;
+		let next = 1;
+		let rows = 0;		
+		let endofgame = false;
+		let figure = Array.new((Math.multiply(width,width)));
+		while(~(i = (Math.multiply(width,width)))){
+			let figure[i] = false;
+			let i = i + 1;
+		}
+		do Output.moveCursor(2,57);
+		do Output.printInt(point);
+		do Output.printInt(point);
+		do Output.printInt(point);
+		return this;
+	}
+	method int change2indice(int x,int y){
+		var int tmp;
+		let tmp = ((Math.divide((Math.multiply(16,y)),width)) + (Math.divide((x-128),width)));
+		return tmp;
+	}
+	method void write_figure(int x, int y){
+		var int tmp;
+		let tmp = change2indice(x,y);
+		let figure[tmp] = true;
+		return ;
+	}
+	method void draw(int indice,boolean flag){
+		var int x;
+		var int y;
+		let y = (Math.multiply((Math.divide(indice,16)),16));
+		let x = ((Math.multiply((indice - y),16)) + 128);
+		do Screen.setColor(flag);
+		do Screen.drawRectangle(x,y,x+(width-1),y+(width-1));
+		return ;
+	}
+	method void all_down(int last_row){
+		var int i;
+		let i = 255;
+		if(last_row = 1){
+			while(~(i = 15)){
+				let figure[i] = figure[(i-16)];
+				do draw(i,figure[i]);
+				let i = i - 1;
+			}
+			while(~(i = -1)){
+				let figure[i] = false;
+				do draw(i,figure[i]);
+				let i = i - 1;
+			}
+		}
+		else{
+			while(~(i = (255 - (Math.multiply((last_row - 1),16))))){
+				let i = i - 1;
+			}
+			while(~(i = 15)){
+				let figure[i] = figure[(i-16)];
+				do draw(i,figure[i]);
+				let i = i - 1;
+			}
+			while(~(i = -1)){
+				let figure[i] = false;
+				do draw(i,figure[i]);
+				let i = i - 1;
+			}			
+		}
+		return ;
+	}
+	method void check(){
+		var int l4;
+		var int l3;
+		var int l2;
+		var int l1;
+		var int i;
+		var int row;
+		var boolean f1;
+		var boolean f2;
+		var boolean f3;
+		var boolean f4;
+		let f1 = true;
+		let f2 = true;
+		let f3 = true;
+		let f4 = true;
+		let row = 0;
+		let l1 = 256 - width;
+		let l2 = l1 - width;
+		let l3 = l2 - width;
+		let l4 = l3 - width;
+		let i = l1;
+		while(~(i = (l1 + 16))){
+			if(~figure[i]){
+				let f1 = false;
+				let i = (l1 + 15);
+			}
+			let i = i + 1;
+		}
+		let i = l2;
+		while(~(i = (l2 + 16))){
+			if(~figure[i]){
+				let f2 = false;
+				let i = (l2 + 15);
+			}
+			let i = i + 1;
+		}
+		let i = l3;
+		while(~(i = (l3 + 16))){
+			if(~figure[i]){
+				let f3 = false;
+				let i = (l3 + 15);
+			}
+			let i = i + 1;
+		}
+		let i = l4;
+		while(~(i = (l4 + 16))){
+			if(~figure[i]){
+				let f4 = false;
+				let i = (l4 + 15);
+			}
+			let i = i + 1;
+		}		
+		if(true = f1){
+			let row = row + 1;
+			do all_down(1);
+		}
+		if(true = f2){
+			let row = row + 1;
+			if(row = 2){
+				do all_down(1);
+			}
+			else{
+				do all_down(2);
+			}
+			//
+		}	
+		if(true = f3){
+			let row = row + 1;
+			if(row = 3){
+				do all_down(1);
+			}
+			else{
+				if(row = 2){
+					do all_down(2);
+				}
+				else{
+					do all_down(3);
+				}
+			}			
+		}	
+		if(true = f4){
+			let row = row + 1;
+			if(row = 4){
+				do all_down(1);
+			}
+			else{
+				if(row = 3){
+					do all_down(2);
+				}
+				else{
+					if(row = 2){
+						do all_down(3);
+					}
+					else{
+						do all_down(4);
+					}
+				}
+			}
+		}
+		if(row = 4){
+			let point = point + 1000;
+		}
+		else{
+			if(row = 3){
+				let point = point + 300;
+			}
+			else{
+				if(row = 2){
+					let point = point + 100;
+				}
+				else{
+					if(row = 1){
+						let point = point + 40;
+					}
+				}
+			}
+		}
+		do Output.moveCursor(2,57);
+		do Output.printInt(point);		
+		return ;
+	}
+	method void play(int i){
+		var char pressing;
+		if(i = 1){
+			let now1 = Segment_1.new(16);
+			do Sys.wait(250);	
+			while((now1.get_moveable())){
+				do Sys.wait(150);
+				let pressing = Keyboard.keyPressed();
+				if(pressing = 131){
+					if(now1.get_label() = 0){
+						if((~figure[(change2indice(now1.get_x(1),now1.get_y(1)-width))]) &
+						   (~figure[(change2indice(now1.get_x(2),now1.get_y(2)-width))]) &
+						   (~figure[(change2indice(now1.get_x(2),now1.get_y(2)-(width+width)))]) &
+						   (~figure[(change2indice(now1.get_x(4),now1.get_y(4)+width))])){
+								do now1.rotate();
+						   }
+					}
+					else{
+						if((~figure[(change2indice(now1.get_x(2)-(width+width),now1.get_y(2)))]) &
+						   (~figure[(change2indice(now1.get_x(2)-width,now1.get_y(2)))]) &
+						   (~figure[(change2indice(now1.get_x(2)+width,now1.get_y(2)))])){
+								do now1.rotate();
+						   }
+					}
+				}
+				else{
+					if(pressing = 133){
+						if((~figure[(change2indice(now1.get_x(1),now1.get_y(1)+width))]) &
+						   (~figure[(change2indice(now1.get_x(2),now1.get_y(2)+width))]) &
+						   (~figure[(change2indice(now1.get_x(3),now1.get_y(3)+width))]) &
+						   (~figure[(change2indice(now1.get_x(4),now1.get_y(4)+width))])){
+								do now1.move_down();
+						}
+					}
+					else{
+						if(pressing = 130){
+							if((~figure[(change2indice(now1.get_x(1)-width,now1.get_y(1)))]) &
+							   (~figure[(change2indice(now1.get_x(2)-width,now1.get_y(2)))]) &
+							   (~figure[(change2indice(now1.get_x(3)-width,now1.get_y(3)))]) &
+							   (~figure[(change2indice(now1.get_x(4)-width,now1.get_y(4)))])){							
+									do now1.move_left();
+							}	
+						}
+						else{
+							if(pressing = 132){
+									if((~figure[(change2indice(now1.get_x(1)+width,now1.get_y(1)))]) &
+									   (~figure[(change2indice(now1.get_x(2)+width,now1.get_y(2)))]) &
+									   (~figure[(change2indice(now1.get_x(3)+width,now1.get_y(3)))]) &
+									   (~figure[(change2indice(now1.get_x(4)+width,now1.get_y(4)))])){						
+											do now1.move_right();
+									}
+							}
+						}
+					}
+				}
+				if((~figure[(change2indice(now1.get_x(1),now1.get_y(1)+width))]) &
+				   (~figure[(change2indice(now1.get_x(2),now1.get_y(2)+width))]) &
+				   (~figure[(change2indice(now1.get_x(3),now1.get_y(3)+width))]) &
+				   (~figure[(change2indice(now1.get_x(4),now1.get_y(4)+width))])){
+						do now1.move_down();
+				}				
+				else{
+					do now1.change_moveable(false);
+				}
+			}
+			do write_figure((now1.get_x(1)),(now1.get_y(1)));
+			do write_figure((now1.get_x(2)),(now1.get_y(2)));
+			do write_figure((now1.get_x(3)),(now1.get_y(3)));
+			do write_figure((now1.get_x(4)),(now1.get_y(4)));
+			do check();			
+		}
+		else{
+			if(i = 2){
+				let now2 = Segment_2.new(16);
+				do Sys.wait(250);
+				while((now2.get_moveable())){
+					do Sys.wait(150);
+					let pressing = Keyboard.keyPressed();
+					if(pressing = 131){
+						if(now2.get_label() = 0){
+							if((~figure[(change2indice(now2.get_x(1),now2.get_y(1)-width))]) &
+							   (~figure[(change2indice(now2.get_x(2),now2.get_y(2)-width))]) &
+							   (~figure[(change2indice(now2.get_x(2),now2.get_y(2)-(width+width)))]) &
+							   (~figure[(change2indice(now2.get_x(4),now2.get_y(4)+width))])){
+									do now2.rotate();
+							   }
+						}
+						else{
+							if((~figure[(change2indice(now2.get_x(2)-(width+width),now2.get_y(2)))]) &
+							   (~figure[(change2indice(now2.get_x(2)-width,now2.get_y(2)))]) &
+							   (~figure[(change2indice(now2.get_x(2)+width,now2.get_y(2)))])){
+									do now2.rotate();
+							   }
+						}
+					}
+					else{
+						if(pressing = 133){
+							if((~figure[(change2indice(now2.get_x(1),now2.get_y(1)+width))]) &
+							   (~figure[(change2indice(now2.get_x(2),now2.get_y(2)+width))]) &
+							   (~figure[(change2indice(now2.get_x(3),now2.get_y(3)+width))]) &
+							   (~figure[(change2indice(now2.get_x(4),now2.get_y(4)+width))])){
+									do now2.move_down();
+							}
+						}
+						else{
+							if(pressing = 130){
+								if((~figure[(change2indice(now2.get_x(1)-width,now2.get_y(1)))]) &
+								   (~figure[(change2indice(now2.get_x(2)-width,now2.get_y(2)))]) &
+								   (~figure[(change2indice(now2.get_x(3)-width,now2.get_y(3)))]) &
+								   (~figure[(change2indice(now2.get_x(4)-width,now2.get_y(4)))])){							
+										do now2.move_left();
+								}	
+							}
+							else{
+								if(pressing = 132){
+										if((~figure[(change2indice(now2.get_x(1)+width,now2.get_y(1)))]) &
+										   (~figure[(change2indice(now2.get_x(2)+width,now2.get_y(2)))]) &
+										   (~figure[(change2indice(now2.get_x(3)+width,now2.get_y(3)))]) &
+										   (~figure[(change2indice(now2.get_x(4)+width,now2.get_y(4)))])){						
+												do now2.move_right();
+										}
+								}
+							}
+						}
+					}
+				if((~figure[(change2indice(now2.get_x(1),now2.get_y(1)+width))]) &
+				   (~figure[(change2indice(now2.get_x(2),now2.get_y(2)+width))]) &
+				   (~figure[(change2indice(now2.get_x(3),now2.get_y(3)+width))]) &
+				   (~figure[(change2indice(now2.get_x(4),now2.get_y(4)+width))])){
+						do now2.move_down();
+				}				
+				else{
+					do now2.change_moveable(false);
+				}
+			}
+			do write_figure((now2.get_x(1)),(now2.get_y(1)));
+			do write_figure((now2.get_x(2)),(now2.get_y(2)));
+			do write_figure((now2.get_x(3)),(now2.get_y(3)));
+			do write_figure((now2.get_x(4)),(now2.get_y(4)));
+			do check();				
+			}
+		}
+	
+		return ;
+	}
+	method boolean if_gameover(){
+		if(figure[8] | figure[9]){
+			return true;
+		}
+		return false;
+	}
+	method void begin(){
+		while(~(next = 0)){
+			if(next = 1){
+				do play(1);
+				let next = 2;
+			}
+			else{
+				if(next = 2){
+					do play(2);
+					let next = 1;
+				}
+			}
+			if(if_gameover()){
+				let next = 0;
+			}
+		}
+		return ;
+	}
+}

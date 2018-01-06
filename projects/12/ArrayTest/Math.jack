@@ -1,0 +1,283 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/Math.jack
+
+/**
+ * A library of commonly used mathematical functions.
+ * Note: Jack compilers implement multiplication and division using OS method calls.
+ */
+class Math {
+    /** Initializes the library. */
+    function void init() {
+		return ;
+    }
+	
+	function boolean bit(int x,int y){
+		if(y = 0){
+			if(x & 1 = 0){
+				return false;
+			}
+			else{
+				return true;
+			}
+		}
+		if(y = 1){
+			if(x & 2 = 0){
+				return false;
+			}
+			else{
+				return true;
+			}		
+		}
+		if(y = 2){
+			if(x & 4 = 0){
+				return false;
+			}
+			else{
+				return true;
+			}			
+		}
+		if(y = 3){
+			if(x & 8 = 0){
+				return false;
+			}
+			else{
+				return true;
+			}		
+		}
+		if(y = 4){
+			if(x & 16 = 0){
+				return false;
+			}
+			else{
+				return true;
+			}			
+		}
+		if(y = 5){
+			if(x & 32 = 0){
+				return false;
+			}
+			else{
+				return true;
+			}		
+		}
+		if(y = 6){
+			if(x & 64 = 0){
+				return false;
+			}
+			else{
+				return true;
+			}			
+		}
+		if(y = 7){
+			if(x & 128 = 0){
+				return false;
+			}
+			else{
+				return true;
+			}		
+		}
+		if(y = 8){
+			if(x & 256 = 0){
+				return false;
+			}
+			else{
+				return true;
+			}			
+		}
+		if(y = 9){
+			if(x & 512 = 0){
+				return false;
+			}
+			else{
+				return true;
+			}		
+		}
+		if(y = 10){
+			if(x & 1024 = 0){
+				return false;
+			}
+			else{
+				return true;
+			}			
+		}
+		if(y = 11){
+			if(x & 2048 = 0){
+				return false;
+			}
+			else{
+				return true;
+			}		
+		}
+		if(y = 12){
+			if(x & 4096 = 0){
+				return false;
+			}
+			else{
+				return true;
+			}			
+		}
+		if(y = 13){
+			if(x & 8192 = 0){
+				return false;
+			}
+			else{
+				return true;
+			}		
+		}
+		if(y = 14){
+			if(x & 16384 = 0){
+				return false;
+			}
+			else{
+				return true;
+			}			
+		}
+		if(y = 15){
+			if(x < 0){
+				return true;
+			}
+			else{
+				return false;
+			}		
+		}
+		return false;		
+	}
+	
+    /** Returns the absolute value of x. */
+    function int abs(int x) {
+		if((x > 0) | (x = 0)){
+			return x;
+		}
+		else{
+			return -x;
+		}
+    }
+
+    /** Returns the product of x and y. 
+     *  When a Jack compiler detects the multiplication operator '*' in the 
+     *  program's code, it handles it by invoking this method. In other words,
+     *  the Jack expressions x*y and multiply(x,y) return the same value.
+     */
+    function int multiply(int x, int y) {
+		var int i;
+		var int sum;
+		let i = 0;
+		let sum = 0;
+		while(~(i = 16)){
+			if(Math.bit(y,i) = true){
+				let sum = sum + x;
+			}
+			let x = x + x;
+			let i = i + 1;
+		}
+		return sum;
+    }
+
+    /** Returns the integer part of x/y.
+     *  When a Jack compiler detects the multiplication operator '/' in the 
+     *  program's code, it handles it by invoking this method. In other words,
+     *  the Jack expressions x/y and divide(x,y) return the same value.
+     */
+    function int divide(int x, int y) {
+		var int fu;
+		var int mo2;
+		let fu = 0;
+		if(x < 0){
+			let x = Math.abs(x);
+			let fu = fu + 1;
+		}
+		if(y < 0){
+			if(y = -32767){
+				return 0;
+			}
+			let y = Math.abs(x);
+			let fu = fu + 1;			
+		}
+		if(x < y){
+			return 0;
+		}
+		let mo2 = Math.divide(x,2*y);
+		if((x-((mo2*2)*y)) < y){
+			if(fu = 1){
+				return -(mo2*2);
+			}
+			else{
+				return (mo2*2);
+			}
+		}
+		else{
+			if(fu = 1){
+				return -((mo2*2)+1);
+			}
+			else{
+				return ((mo2*2)+1);
+			}
+		}
+    }
+
+    /** Returns the integer part of the square root of x. */
+    function int sqrt(int x) {
+		var int mid,left,right,t1,t2;
+		if((x < 0) | (x = 0)){
+			return 0;
+		}
+		let left = 0;
+		let right = 182;
+		while(left < right){
+			let mid = (left + ((right-left) / 2));
+			let t1 = (mid * mid);
+			let t2 = (mid+1)*(mid+1);
+			if(t1 < 0){
+				let right = mid;
+			}
+			else{
+				if(((t1 < x) | (t1 = x)) & ((t2 > x) | (t2 < 0))){
+					return mid;
+				}
+				else{
+					if(t1 > x){
+						let right = mid - 1;
+					}
+					else{
+						if(t2 > 0){
+							if(t2 < x){
+								let left = mid + 1;
+							}
+							else{
+								if(t2 = x){
+									return (mid+1);
+								}					
+							}
+						}
+						else{
+							let right = mid - 1;
+						}
+					}
+				}
+			}
+		}
+		return left;
+    }
+
+    /** Returns the greater number. */
+    function int max(int a, int b) {
+		if(a > b){
+			return a;
+		}
+		else{
+			return b;
+		}
+    }
+
+    /** Returns the smaller number. */
+    function int min(int a, int b) {
+		if(a > b){
+			return b;
+		}
+		else{
+			return a;
+		}	
+    }
+}

@@ -1,0 +1,103 @@
+function Main.main 1
+  push constant 8001
+  push constant 16
+  push constant 1
+  neg
+  call Main.fillMemory 3
+  push constant 8000
+  call Memory.peek 1
+  pop local 0
+  push local 0
+  call Main.convert 1
+  return
+function Main.convert 3
+  push constant 1
+  neg
+  pop local 2
+label begin_0
+  push local 2
+  if-goto while_0
+  goto end_while_0
+label while_0
+  push local 1
+  push constant 1
+  add
+  pop local 1
+  push local 0
+  call Main.nextMask 1
+  pop local 0
+  push local 1
+  push constant 16
+  gt
+  not
+  if-goto if_0
+  goto else_0
+label if_0
+  push argument 0
+  push local 0
+  and
+  push constant 0
+  eq
+  not
+  if-goto if_1
+  goto else_1
+label if_1
+  push constant 8000
+  push local 1
+  add
+  push constant 1
+  call Memory.poke 2
+  goto end_if_1
+label else_1
+  push constant 8000
+  push local 1
+  add
+  push constant 0
+  call Memory.poke 2
+label end_if_1
+  goto end_if_0
+label else_0
+  push constant 0
+  pop local 2
+label end_if_0
+  goto begin_0
+label end_while_0
+  return
+function Main.nextMask 0
+  push argument 0
+  push constant 0
+  eq
+  if-goto if_2
+  goto else_2
+label if_2
+  push constant 1
+  return
+  goto end_if_2
+label else_2
+  push argument 0
+  push constant 2
+  call Math.multiply 2
+  return
+label end_if_2
+function Main.fillMemory 0
+label begin_1
+  push argument 1
+  push constant 0
+  gt
+  if-goto while_1
+  goto end_while_1
+label while_1
+  push argument 0
+  push argument 2
+  call Memory.poke 2
+  push argument 1
+  push constant 1
+  sub
+  pop argument 1
+  push argument 0
+  push constant 1
+  add
+  pop argument 0
+  goto begin_1
+label end_while_1
+  return

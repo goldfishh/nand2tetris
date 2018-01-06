@@ -1,0 +1,48 @@
+// Implementation of classic arcade game Pong (translated from Python).
+// 
+// Author: Alan Farkas
+// Course: From Nand-To-Tetris-II (Coursera)
+// Assignment: Project 9 (Jack Program)
+//
+// Notes:
+// 	1) The game will start in player vs computer mode
+//	2) The player conrols the right paddle and the computer controls the left paddle
+//	3) Use the up/down arrow keys to move the player's paddle
+//  4) The game ends when a player has reached 11 points or the escape key is pressed
+//  5) You can also adjust the "waitTime" variable in this method if the game is running too fast or slow
+//
+//
+// Last Edit: 11/12/2017
+//
+
+class Main {
+   function void main() {
+
+		var Board board;						// Game board
+		var int balllength;						// Ball length
+		var int boardWidth, boardHeight;		// Board height and width
+		var int padWidth, padHeight;			// Pad height and width
+		var int winningScore;					// Winning score
+		var int waitTime;						// Interval (in milliseconds) between screen updates
+	  
+	  
+		// Initialization
+		let boardWidth = 512;
+		let boardHeight = 256;
+		let balllength = 5;
+		let padWidth = 7;
+		let padHeight = 45;
+		let waitTime = 40;						// # of milliseconds between screen updates
+		let winningScore = 11;
+	  
+	  
+	  // Create game board and start a new game
+	  let board = Board.new(boardWidth, boardHeight, balllength, padWidth, padHeight, waitTime, winningScore);
+	  do board.newGame();
+	  
+	  // Release board memory
+	  do board.dispose();
+	  
+      return;
+   }
+}

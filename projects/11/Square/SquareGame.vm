@@ -1,0 +1,172 @@
+function SquareGame.new 0
+  push constant 0
+  push constant 0
+  push constant 30
+  call Square.new 4
+  pop static 0
+  push constant 0
+  pop static 1
+  push argument 0
+  return
+function SquareGame.dispose 0
+  call Square.dispose 1
+  push argument 0
+  call Memory.deAlloc 1
+  return
+function SquareGame.moveSquare 0
+  push static 1
+  push constant 1
+  eq
+  if-goto if_0
+  goto else_0
+label if_0
+  call Square.moveUp 1
+  goto end_if_0
+label else_0
+label end_if_0
+  push static 1
+  push constant 2
+  eq
+  if-goto if_1
+  goto else_1
+label if_1
+  call Square.moveDown 1
+  goto end_if_1
+label else_1
+label end_if_1
+  push static 1
+  push constant 3
+  eq
+  if-goto if_2
+  goto else_2
+label if_2
+  call Square.moveLeft 1
+  goto end_if_2
+label else_2
+label end_if_2
+  push static 1
+  push constant 4
+  eq
+  if-goto if_3
+  goto else_3
+label if_3
+  call Square.moveRight 1
+  goto end_if_3
+label else_3
+label end_if_3
+  push constant 5
+  call Sys.wait 1
+  return
+function SquareGame.run 2
+  push constant 0
+  pop local 1
+label begin_0
+  push local 1
+  not
+  if-goto while_0
+  goto end_while_0
+label while_0
+label begin_1
+  push local 0
+  push constant 0
+  eq
+  if-goto while_1
+  goto end_while_1
+label while_1
+  call Keyboard.keyPressed 0
+  pop local 0
+  call SquareGame.moveSquare 1
+  goto begin_1
+label end_while_1
+  push local 0
+  push constant 81
+  eq
+  if-goto if_4
+  goto else_4
+label if_4
+  push constant 1
+  neg
+  pop local 1
+  goto end_if_4
+label else_4
+label end_if_4
+  push local 0
+  push constant 90
+  eq
+  if-goto if_5
+  goto else_5
+label if_5
+  call Square.decSize 1
+  goto end_if_5
+label else_5
+label end_if_5
+  push local 0
+  push constant 88
+  eq
+  if-goto if_6
+  goto else_6
+label if_6
+  call Square.incSize 1
+  goto end_if_6
+label else_6
+label end_if_6
+  push local 0
+  push constant 131
+  eq
+  if-goto if_7
+  goto else_7
+label if_7
+  push constant 1
+  pop static 1
+  goto end_if_7
+label else_7
+label end_if_7
+  push local 0
+  push constant 133
+  eq
+  if-goto if_8
+  goto else_8
+label if_8
+  push constant 2
+  pop static 1
+  goto end_if_8
+label else_8
+label end_if_8
+  push local 0
+  push constant 130
+  eq
+  if-goto if_9
+  goto else_9
+label if_9
+  push constant 3
+  pop static 1
+  goto end_if_9
+label else_9
+label end_if_9
+  push local 0
+  push constant 132
+  eq
+  if-goto if_10
+  goto else_10
+label if_10
+  push constant 4
+  pop static 1
+  goto end_if_10
+label else_10
+label end_if_10
+label begin_2
+  push local 0
+  push constant 0
+  eq
+  not
+  if-goto while_2
+  goto end_while_2
+label while_2
+  call Keyboard.keyPressed 0
+  pop local 0
+  call SquareGame.moveSquare 1
+  goto begin_2
+label end_while_2
+  goto begin_0
+label end_while_0
+  return

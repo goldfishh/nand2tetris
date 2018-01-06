@@ -1,0 +1,472 @@
+function Main.main 30
+push constant 1
+pop local 13
+push constant 15
+pop local 0
+push constant 20
+pop local 1
+push constant 236
+pop local 2
+push constant 3
+pop local 3
+push local 0
+push local 0
+call Math.multiply 2
+push local 3
+push local 3
+call Math.multiply 2
+sub
+call Math.sqrt 1
+pop local 4
+push local 1
+push local 2
+push local 1
+push local 3
+add
+push local 2
+call Line.new 4
+pop local 16
+push local 1
+push local 3
+add
+push local 2
+push local 1
+push local 3
+add
+push local 2
+push local 4
+sub
+call Line.new 4
+pop local 17
+push local 1
+push local 2
+push local 1
+push local 3
+add
+push local 2
+push local 4
+sub
+call Line.new 4
+pop local 18
+push constant 0
+push constant 0
+push constant 0
+push constant 0
+call Line.new 4
+pop local 19
+push constant 0
+pop local 21
+push constant 0
+pop local 22
+push local 3
+push local 4
+call Vector.new 2
+pop local 24
+push constant 0
+pop local 23
+call Levels.new 0
+pop local 20
+push constant 0
+pop local 14
+label WHILE_EXP0
+push local 23
+not
+not
+if-goto WHILE_END0
+push constant 22
+push constant 0
+call Output.moveCursor 2
+pop temp 0
+push local 14
+call Output.printInt 1
+pop temp 0
+push local 16
+call Line.draw 1
+pop temp 0
+push local 17
+call Line.draw 1
+pop temp 0
+push local 18
+call Line.draw 1
+pop temp 0
+push local 1
+push local 3
+add
+pop local 25
+push local 2
+push local 4
+sub
+pop local 26
+push constant 1
+pop local 29
+push local 24
+push local 3
+push local 4
+call Vector.move 3
+pop temp 0
+push local 19
+push local 1
+push local 2
+push local 1
+push local 3
+add
+push local 2
+push local 4
+sub
+call Line.move 5
+pop temp 0
+push local 20
+push constant 1
+call Levels.drawLevel 2
+pop temp 0
+label WHILE_EXP1
+push local 22
+push local 21
+push constant 0
+eq
+or
+not
+if-goto WHILE_END1
+call Keyboard.keyPressed 0
+pop local 21
+push local 21
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+pop local 22
+label IF_FALSE0
+goto WHILE_EXP1
+label WHILE_END1
+call Screen.clearScreen 0
+pop temp 0
+push constant 22
+push constant 0
+call Output.moveCursor 2
+pop temp 0
+push local 14
+call Output.printInt 1
+pop temp 0
+push local 21
+push constant 130
+eq
+push local 3
+push constant 0
+gt
+and
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push local 3
+push constant 1
+sub
+pop local 3
+push local 0
+push local 0
+call Math.multiply 2
+push local 3
+push local 3
+call Math.multiply 2
+sub
+call Math.sqrt 1
+pop local 4
+push local 16
+push local 1
+push local 2
+push local 1
+push local 3
+add
+push local 2
+call Line.move 5
+pop temp 0
+push local 17
+push local 1
+push local 3
+add
+push local 2
+push local 1
+push local 3
+add
+push local 2
+push local 4
+sub
+call Line.move 5
+pop temp 0
+push local 18
+push local 1
+push local 2
+push local 1
+push local 3
+add
+push local 2
+push local 4
+sub
+call Line.move 5
+pop temp 0
+label IF_FALSE1
+push local 21
+push constant 132
+eq
+push local 3
+push local 0
+lt
+and
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push local 3
+push constant 1
+add
+pop local 3
+push local 0
+push local 0
+call Math.multiply 2
+push local 3
+push local 3
+call Math.multiply 2
+sub
+call Math.sqrt 1
+pop local 4
+push local 16
+push local 1
+push local 2
+push local 1
+push local 3
+add
+push local 2
+call Line.move 5
+pop temp 0
+push local 17
+push local 1
+push local 3
+add
+push local 2
+push local 1
+push local 3
+add
+push local 2
+push local 4
+sub
+call Line.move 5
+pop temp 0
+push local 18
+push local 1
+push local 2
+push local 1
+push local 3
+add
+push local 2
+push local 4
+sub
+call Line.move 5
+pop temp 0
+label IF_FALSE2
+push local 21
+push constant 131
+eq
+push local 0
+push constant 100
+lt
+and
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push local 0
+push constant 1
+add
+pop local 0
+push local 0
+push local 0
+call Math.multiply 2
+push local 3
+push local 3
+call Math.multiply 2
+sub
+call Math.sqrt 1
+pop local 4
+push local 16
+push local 1
+push local 2
+push local 1
+push local 3
+add
+push local 2
+call Line.move 5
+pop temp 0
+push local 17
+push local 1
+push local 3
+add
+push local 2
+push local 1
+push local 3
+add
+push local 2
+push local 4
+sub
+call Line.move 5
+pop temp 0
+push local 18
+push local 1
+push local 2
+push local 1
+push local 3
+add
+push local 2
+push local 4
+sub
+call Line.move 5
+pop temp 0
+label IF_FALSE3
+push local 21
+push constant 133
+eq
+push local 0
+push constant 1
+gt
+and
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push local 0
+push constant 1
+sub
+pop local 0
+push local 0
+push local 0
+call Math.multiply 2
+push local 3
+push local 3
+call Math.multiply 2
+sub
+call Math.sqrt 1
+pop local 4
+push local 16
+push local 1
+push local 2
+push local 1
+push local 3
+add
+push local 2
+call Line.move 5
+pop temp 0
+push local 17
+push local 1
+push local 3
+add
+push local 2
+push local 1
+push local 3
+add
+push local 2
+push local 4
+sub
+call Line.move 5
+pop temp 0
+push local 18
+push local 1
+push local 2
+push local 1
+push local 3
+add
+push local 2
+push local 4
+sub
+call Line.move 5
+pop temp 0
+label IF_FALSE4
+push local 21
+push constant 32
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+label WHILE_EXP2
+push local 19
+push constant 300
+call Line.crossesY 2
+not
+not
+if-goto WHILE_END2
+push local 25
+pop local 27
+push local 26
+pop local 28
+push local 24
+push local 29
+call Vector.sin 2
+pop local 7
+push local 24
+push local 29
+call Vector.cos 2
+pop local 8
+push constant 5
+push local 29
+call Math.multiply 2
+push local 29
+call Math.multiply 2
+push constant 2
+call Math.divide 2
+pop local 5
+push local 8
+pop local 6
+push local 7
+push local 5
+sub
+pop local 9
+push local 25
+push local 6
+add
+pop local 25
+push local 26
+push local 9
+sub
+pop local 26
+push local 19
+push local 27
+push local 28
+push local 25
+push local 26
+call Line.move 5
+pop temp 0
+push local 19
+call Line.draw 1
+pop temp 0
+push local 29
+push constant 1
+add
+pop local 29
+goto WHILE_EXP2
+label WHILE_END2
+push local 14
+push constant 1
+add
+pop local 14
+label IF_FALSE5
+push local 21
+push constant 81
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push constant 0
+not
+pop local 23
+label IF_FALSE6
+push local 21
+push constant 0
+eq
+not
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push constant 0
+not
+pop local 22
+label IF_FALSE7
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return

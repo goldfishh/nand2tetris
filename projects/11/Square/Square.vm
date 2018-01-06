@@ -1,0 +1,255 @@
+function Square.new 0
+  push argument 1
+  pop static 0
+  push argument 2
+  pop static 1
+  push argument 3
+  pop static 2
+  call Square.draw 1
+  push argument 0
+  return
+function Square.dispose 0
+  push argument 0
+  call Memory.deAlloc 1
+  return
+function Square.draw 0
+  push constant 1
+  neg
+  call Screen.setColor 1
+  push static 0
+  push static 1
+  push static 0
+  push static 2
+  add
+  push static 1
+  push static 2
+  add
+  call Screen.drawRectangle 4
+  return
+function Square.erase 0
+  push constant 0
+  call Screen.setColor 1
+  push static 0
+  push static 1
+  push static 0
+  push static 2
+  add
+  push static 1
+  push static 2
+  add
+  call Screen.drawRectangle 4
+  return
+function Square.incSize 0
+  push static 1
+  push static 2
+  add
+  push constant 254
+  lt
+  push static 0
+  push static 2
+  add
+  push constant 510
+  lt
+  and
+  if-goto if_0
+  goto else_0
+label if_0
+  call Square.erase 1
+  push static 2
+  push constant 2
+  add
+  pop static 2
+  call Square.draw 1
+  goto end_if_0
+label else_0
+label end_if_0
+  return
+function Square.decSize 0
+  push static 2
+  push constant 2
+  gt
+  if-goto if_1
+  goto else_1
+label if_1
+  call Square.erase 1
+  push static 2
+  push constant 2
+  sub
+  pop static 2
+  call Square.draw 1
+  goto end_if_1
+label else_1
+label end_if_1
+  return
+function Square.moveUp 0
+  push static 1
+  push constant 1
+  gt
+  if-goto if_2
+  goto else_2
+label if_2
+  push constant 0
+  call Screen.setColor 1
+  push static 0
+  push static 1
+  push static 2
+  add
+  push constant 1
+  sub
+  push static 0
+  push static 2
+  add
+  push static 1
+  push static 2
+  add
+  call Screen.drawRectangle 4
+  push static 1
+  push constant 2
+  sub
+  pop static 1
+  push constant 1
+  neg
+  call Screen.setColor 1
+  push static 0
+  push static 1
+  push static 0
+  push static 2
+  add
+  push static 1
+  push constant 1
+  add
+  call Screen.drawRectangle 4
+  goto end_if_2
+label else_2
+label end_if_2
+  return
+function Square.moveDown 0
+  push static 1
+  push static 2
+  add
+  push constant 254
+  lt
+  if-goto if_3
+  goto else_3
+label if_3
+  push constant 0
+  call Screen.setColor 1
+  push static 0
+  push static 1
+  push static 0
+  push static 2
+  add
+  push static 1
+  push constant 1
+  add
+  call Screen.drawRectangle 4
+  push static 1
+  push constant 2
+  add
+  pop static 1
+  push constant 1
+  neg
+  call Screen.setColor 1
+  push static 0
+  push static 1
+  push static 2
+  add
+  push constant 1
+  sub
+  push static 0
+  push static 2
+  add
+  push static 1
+  push static 2
+  add
+  call Screen.drawRectangle 4
+  goto end_if_3
+label else_3
+label end_if_3
+  return
+function Square.moveLeft 0
+  push static 0
+  push constant 1
+  gt
+  if-goto if_4
+  goto else_4
+label if_4
+  push constant 0
+  call Screen.setColor 1
+  push static 0
+  push static 2
+  add
+  push constant 1
+  sub
+  push static 1
+  push static 0
+  push static 2
+  add
+  push static 1
+  push static 2
+  add
+  call Screen.drawRectangle 4
+  push static 0
+  push constant 2
+  sub
+  pop static 0
+  push constant 1
+  neg
+  call Screen.setColor 1
+  push static 0
+  push static 1
+  push static 0
+  push constant 1
+  add
+  push static 1
+  push static 2
+  add
+  call Screen.drawRectangle 4
+  goto end_if_4
+label else_4
+label end_if_4
+  return
+function Square.moveRight 0
+  push static 0
+  push static 2
+  add
+  push constant 510
+  lt
+  if-goto if_5
+  goto else_5
+label if_5
+  push constant 0
+  call Screen.setColor 1
+  push static 0
+  push static 1
+  push static 0
+  push constant 1
+  add
+  push static 1
+  push static 2
+  add
+  call Screen.drawRectangle 4
+  push static 0
+  push constant 2
+  add
+  pop static 0
+  push constant 1
+  neg
+  call Screen.setColor 1
+  push static 0
+  push static 2
+  add
+  push constant 1
+  sub
+  push static 1
+  push static 0
+  push static 2
+  add
+  push static 1
+  push static 2
+  add
+  call Screen.drawRectangle 4
+  goto end_if_5
+label else_5
+label end_if_5
+  return

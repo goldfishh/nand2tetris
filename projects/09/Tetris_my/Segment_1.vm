@@ -1,0 +1,625 @@
+function Segment_1.new 0
+push constant 11
+call Memory.alloc 1
+pop pointer 0
+push constant 0
+not
+pop this 0
+push constant 0
+pop this 10
+push argument 0
+pop this 9
+push constant 256
+pop this 5
+push this 5
+push this 9
+sub
+push this 9
+sub
+pop this 1
+push this 5
+push this 9
+sub
+pop this 3
+push this 5
+push this 9
+add
+pop this 7
+push constant 0
+pop this 2
+push constant 0
+pop this 4
+push constant 0
+pop this 6
+push constant 0
+pop this 8
+push pointer 0
+push constant 0
+not
+push this 1
+push this 2
+call Segment_1.print_point 4
+pop temp 0
+push pointer 0
+push constant 0
+not
+push this 3
+push this 4
+call Segment_1.print_point 4
+pop temp 0
+push pointer 0
+push constant 0
+not
+push this 5
+push this 6
+call Segment_1.print_point 4
+pop temp 0
+push pointer 0
+push constant 0
+not
+push this 7
+push this 8
+call Segment_1.print_point 4
+pop temp 0
+push pointer 0
+return
+function Segment_1.get_x 0
+push argument 0
+pop pointer 0
+push argument 1
+push constant 1
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 1
+return
+label IF_FALSE0
+push argument 1
+push constant 2
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 3
+return
+label IF_FALSE1
+push argument 1
+push constant 3
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push this 5
+return
+label IF_FALSE2
+push argument 1
+push constant 4
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push this 7
+return
+goto IF_END3
+label IF_FALSE3
+push constant 0
+return
+label IF_END3
+function Segment_1.get_y 0
+push argument 0
+pop pointer 0
+push argument 1
+push constant 1
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 2
+return
+label IF_FALSE0
+push argument 1
+push constant 2
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 4
+return
+label IF_FALSE1
+push argument 1
+push constant 3
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push this 6
+return
+label IF_FALSE2
+push argument 1
+push constant 4
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push this 8
+return
+goto IF_END3
+label IF_FALSE3
+push constant 0
+return
+label IF_END3
+function Segment_1.get_moveable 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Segment_1.change_moveable 0
+push argument 0
+pop pointer 0
+push argument 1
+pop this 0
+push constant 0
+return
+function Segment_1.get_label 0
+push argument 0
+pop pointer 0
+push this 10
+return
+function Segment_1.be_blank 0
+push argument 0
+pop pointer 0
+push pointer 0
+push constant 0
+push this 1
+push this 2
+call Segment_1.print_point 4
+pop temp 0
+push pointer 0
+push constant 0
+push this 3
+push this 4
+call Segment_1.print_point 4
+pop temp 0
+push pointer 0
+push constant 0
+push this 5
+push this 6
+call Segment_1.print_point 4
+pop temp 0
+push pointer 0
+push constant 0
+push this 7
+push this 8
+call Segment_1.print_point 4
+pop temp 0
+push constant 0
+return
+function Segment_1.print_point 0
+push argument 0
+pop pointer 0
+push argument 1
+call Screen.setColor 1
+pop temp 0
+push argument 2
+push constant 127
+gt
+push argument 3
+push constant 1
+neg
+gt
+and
+push argument 2
+push constant 384
+lt
+push argument 3
+push constant 256
+lt
+and
+and
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push argument 2
+push argument 3
+push argument 2
+push this 9
+push constant 1
+sub
+add
+push argument 3
+push this 9
+push constant 1
+sub
+add
+call Screen.drawRectangle 4
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Segment_1.move_left 0
+push argument 0
+pop pointer 0
+push this 1
+push constant 128
+eq
+push constant 0
+push this 0
+eq
+or
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+return
+label IF_FALSE0
+push pointer 0
+call Segment_1.be_blank 1
+pop temp 0
+push this 1
+push this 9
+sub
+pop this 1
+push this 3
+push this 9
+sub
+pop this 3
+push this 5
+push this 9
+sub
+pop this 5
+push this 7
+push this 9
+sub
+pop this 7
+push pointer 0
+push constant 0
+not
+push this 1
+push this 2
+call Segment_1.print_point 4
+pop temp 0
+push pointer 0
+push constant 0
+not
+push this 3
+push this 4
+call Segment_1.print_point 4
+pop temp 0
+push pointer 0
+push constant 0
+not
+push this 5
+push this 6
+call Segment_1.print_point 4
+pop temp 0
+push pointer 0
+push constant 0
+not
+push this 7
+push this 8
+call Segment_1.print_point 4
+pop temp 0
+push constant 0
+return
+function Segment_1.move_right 0
+push argument 0
+pop pointer 0
+push this 7
+push constant 384
+push this 9
+sub
+eq
+push constant 0
+push this 0
+eq
+or
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+return
+label IF_FALSE0
+push pointer 0
+call Segment_1.be_blank 1
+pop temp 0
+push this 1
+push this 9
+add
+pop this 1
+push this 3
+push this 9
+add
+pop this 3
+push this 5
+push this 9
+add
+pop this 5
+push this 7
+push this 9
+add
+pop this 7
+push pointer 0
+push constant 0
+not
+push this 1
+push this 2
+call Segment_1.print_point 4
+pop temp 0
+push pointer 0
+push constant 0
+not
+push this 3
+push this 4
+call Segment_1.print_point 4
+pop temp 0
+push pointer 0
+push constant 0
+not
+push this 5
+push this 6
+call Segment_1.print_point 4
+pop temp 0
+push pointer 0
+push constant 0
+not
+push this 7
+push this 8
+call Segment_1.print_point 4
+pop temp 0
+push constant 0
+return
+function Segment_1.move_down 0
+push argument 0
+pop pointer 0
+push this 0
+not
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+return
+label IF_FALSE0
+push this 2
+push constant 256
+push this 9
+sub
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 0
+pop this 0
+push constant 0
+return
+label IF_FALSE1
+push pointer 0
+call Segment_1.be_blank 1
+pop temp 0
+push this 2
+push this 9
+add
+pop this 2
+push this 4
+push this 9
+add
+pop this 4
+push this 6
+push this 9
+add
+pop this 6
+push this 8
+push this 9
+add
+pop this 8
+push pointer 0
+push constant 0
+not
+push this 1
+push this 2
+call Segment_1.print_point 4
+pop temp 0
+push pointer 0
+push constant 0
+not
+push this 3
+push this 4
+call Segment_1.print_point 4
+pop temp 0
+push pointer 0
+push constant 0
+not
+push this 5
+push this 6
+call Segment_1.print_point 4
+pop temp 0
+push pointer 0
+push constant 0
+not
+push this 7
+push this 8
+call Segment_1.print_point 4
+pop temp 0
+push constant 0
+return
+function Segment_1.rotate 0
+push argument 0
+pop pointer 0
+push this 0
+not
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+return
+label IF_FALSE0
+push this 10
+push constant 0
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 2
+push constant 256
+push this 9
+sub
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push constant 0
+return
+label IF_FALSE2
+push pointer 0
+call Segment_1.be_blank 1
+pop temp 0
+push this 1
+push this 9
+push this 9
+add
+add
+pop this 1
+push this 3
+push this 9
+add
+pop this 3
+push this 7
+push this 9
+sub
+pop this 7
+push this 2
+push this 9
+add
+pop this 2
+push this 6
+push this 9
+sub
+pop this 6
+push this 8
+push this 9
+push this 9
+add
+sub
+pop this 8
+push pointer 0
+push constant 0
+not
+push this 1
+push this 2
+call Segment_1.print_point 4
+pop temp 0
+push pointer 0
+push constant 0
+not
+push this 3
+push this 4
+call Segment_1.print_point 4
+pop temp 0
+push pointer 0
+push constant 0
+not
+push this 5
+push this 6
+call Segment_1.print_point 4
+pop temp 0
+push pointer 0
+push constant 0
+not
+push this 7
+push this 8
+call Segment_1.print_point 4
+pop temp 0
+push constant 1
+pop this 10
+goto IF_END1
+label IF_FALSE1
+push this 1
+push constant 128
+push this 9
+push this 9
+add
+add
+lt
+push this 1
+push constant 384
+push this 9
+push this 9
+add
+sub
+gt
+or
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push constant 0
+return
+label IF_FALSE3
+push pointer 0
+call Segment_1.be_blank 1
+pop temp 0
+push this 1
+push this 9
+push this 9
+add
+sub
+pop this 1
+push this 3
+push this 9
+sub
+pop this 3
+push this 7
+push this 9
+add
+pop this 7
+push this 2
+push this 9
+sub
+pop this 2
+push this 6
+push this 9
+add
+pop this 6
+push this 8
+push this 9
+push this 9
+add
+add
+pop this 8
+push pointer 0
+push constant 0
+not
+push this 1
+push this 2
+call Segment_1.print_point 4
+pop temp 0
+push pointer 0
+push constant 0
+not
+push this 3
+push this 4
+call Segment_1.print_point 4
+pop temp 0
+push pointer 0
+push constant 0
+not
+push this 5
+push this 6
+call Segment_1.print_point 4
+pop temp 0
+push pointer 0
+push constant 0
+not
+push this 7
+push this 8
+call Segment_1.print_point 4
+pop temp 0
+push constant 0
+pop this 10
+label IF_END1
+push constant 0
+return
+function Segment_1.dispose 0
+push argument 0
+pop pointer 0
+push constant 0
+return

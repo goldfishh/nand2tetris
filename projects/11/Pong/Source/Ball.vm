@@ -1,0 +1,409 @@
+function Ball.new 0
+  push argument 1
+  pop static 0
+  push argument 2
+  pop static 1
+  push argument 3
+  pop static 10
+  push argument 4
+  push constant 6
+  sub
+  pop static 11
+  push argument 5
+  pop static 12
+  push argument 6
+  push constant 6
+  sub
+  pop static 13
+  push constant 0
+  pop static 14
+  call Ball.show 1
+  push argument 0
+  return
+function Ball.dispose 0
+  push argument 0
+  call Memory.deAlloc 1
+  return
+function Ball.show 0
+  push constant 1
+  neg
+  call Screen.setColor 1
+  call Ball.draw 1
+  return
+function Ball.hide 0
+  push constant 0
+  call Screen.setColor 1
+  call Ball.draw 1
+  return
+function Ball.draw 0
+  push static 0
+  push static 1
+  push static 0
+  push constant 5
+  add
+  push static 1
+  push constant 5
+  add
+  call Screen.drawRectangle 4
+  return
+function Ball.getLeft 0
+  push static 0
+  return
+function Ball.getRight 0
+  push static 0
+  push constant 5
+  add
+  return
+function Ball.setDestination 3
+  push argument 1
+  push static 0
+  sub
+  pop static 2
+  push argument 2
+  push static 1
+  sub
+  pop static 3
+  push static 2
+  call Math.abs 1
+  pop local 0
+  push static 3
+  call Math.abs 1
+  pop local 1
+  push local 0
+  push local 1
+  lt
+  pop static 7
+  push static 7
+  if-goto if_0
+  goto else_0
+label if_0
+  push local 0
+  pop local 2
+  push local 1
+  pop local 0
+  push local 2
+  pop local 1
+  push static 1
+  push argument 2
+  lt
+  pop static 8
+  push static 0
+  push argument 1
+  lt
+  pop static 9
+  goto end_if_0
+label else_0
+  push static 0
+  push argument 1
+  lt
+  pop static 8
+  push static 1
+  push argument 2
+  lt
+  pop static 9
+label end_if_0
+  push constant 2
+  push local 1
+  call Math.multiply 2
+  push local 0
+  sub
+  pop static 4
+  push constant 2
+  push local 1
+  call Math.multiply 2
+  pop static 5
+  push constant 2
+  push local 1
+  push local 0
+  sub
+  call Math.multiply 2
+  pop static 6
+  return
+function Ball.move 0
+  call Ball.hide 1
+  push static 4
+  push constant 0
+  lt
+  if-goto if_1
+  goto else_1
+label if_1
+  push static 4
+  push static 5
+  add
+  pop static 4
+  goto end_if_1
+label else_1
+  push static 4
+  push static 6
+  add
+  pop static 4
+  push static 9
+  if-goto if_2
+  goto else_2
+label if_2
+  push static 7
+  if-goto if_3
+  goto else_3
+label if_3
+  push static 0
+  push constant 4
+  add
+  pop static 0
+  goto end_if_3
+label else_3
+  push static 1
+  push constant 4
+  add
+  pop static 1
+label end_if_3
+  goto end_if_2
+label else_2
+  push static 7
+  if-goto if_4
+  goto else_4
+label if_4
+  push static 0
+  push constant 4
+  sub
+  pop static 0
+  goto end_if_4
+label else_4
+  push static 1
+  push constant 4
+  sub
+  pop static 1
+label end_if_4
+label end_if_2
+label end_if_1
+  push static 8
+  if-goto if_5
+  goto else_5
+label if_5
+  push static 7
+  if-goto if_6
+  goto else_6
+label if_6
+  push static 1
+  push constant 4
+  add
+  pop static 1
+  goto end_if_6
+label else_6
+  push static 0
+  push constant 4
+  add
+  pop static 0
+label end_if_6
+  goto end_if_5
+label else_5
+  push static 7
+  if-goto if_7
+  goto else_7
+label if_7
+  push static 1
+  push constant 4
+  sub
+  pop static 1
+  goto end_if_7
+label else_7
+  push static 0
+  push constant 4
+  sub
+  pop static 0
+label end_if_7
+label end_if_5
+  push static 0
+  push static 10
+  gt
+  not
+  if-goto if_8
+  goto else_8
+label if_8
+  push constant 1
+  pop static 14
+  push static 10
+  pop static 0
+  goto end_if_8
+label else_8
+label end_if_8
+  push static 0
+  push static 11
+  lt
+  not
+  if-goto if_9
+  goto else_9
+label if_9
+  push constant 2
+  pop static 14
+  push static 11
+  pop static 0
+  goto end_if_9
+label else_9
+label end_if_9
+  push static 1
+  push static 12
+  gt
+  not
+  if-goto if_10
+  goto else_10
+label if_10
+  push constant 3
+  pop static 14
+  push static 12
+  pop static 1
+  goto end_if_10
+label else_10
+label end_if_10
+  push static 1
+  push static 13
+  lt
+  not
+  if-goto if_11
+  goto else_11
+label if_11
+  push constant 4
+  pop static 14
+  push static 13
+  pop static 1
+  goto end_if_11
+label else_11
+label end_if_11
+  call Ball.show 1
+  push static 14
+  return
+function Ball.bounce 5
+  push static 2
+  push constant 10
+  call Math.divide 2
+  pop local 2
+  push static 3
+  push constant 10
+  call Math.divide 2
+  pop local 3
+  push argument 1
+  push constant 0
+  eq
+  if-goto if_12
+  goto else_12
+label if_12
+  push constant 10
+  pop local 4
+  goto end_if_12
+label else_12
+  push static 2
+  push constant 0
+  lt
+  not
+  push argument 1
+  push constant 1
+  eq
+  and
+  push static 2
+  push constant 0
+  lt
+  push argument 1
+  push constant 1
+  neg
+  eq
+  and
+  or
+  if-goto if_13
+  goto else_13
+label if_13
+  push constant 20
+  pop local 4
+  goto end_if_13
+label else_13
+  push constant 5
+  pop local 4
+label end_if_13
+label end_if_12
+  push static 14
+  push constant 1
+  eq
+  if-goto if_14
+  goto else_14
+label if_14
+  push constant 506
+  pop local 0
+  push local 3
+  push constant 50
+  neg
+  call Math.multiply 2
+  push local 2
+  call Math.divide 2
+  pop local 1
+  push static 1
+  push local 1
+  push local 4
+  call Math.multiply 2
+  add
+  pop local 1
+  goto end_if_14
+label else_14
+  push static 14
+  push constant 2
+  eq
+  if-goto if_15
+  goto else_15
+label if_15
+  push constant 0
+  pop local 0
+  push local 3
+  push constant 50
+  call Math.multiply 2
+  push local 2
+  call Math.divide 2
+  pop local 1
+  push static 1
+  push local 1
+  push local 4
+  call Math.multiply 2
+  add
+  pop local 1
+  goto end_if_15
+label else_15
+  push static 14
+  push constant 3
+  eq
+  if-goto if_16
+  goto else_16
+label if_16
+  push constant 250
+  pop local 1
+  push local 2
+  push constant 25
+  neg
+  call Math.multiply 2
+  push local 3
+  call Math.divide 2
+  pop local 0
+  push static 0
+  push local 0
+  push local 4
+  call Math.multiply 2
+  add
+  pop local 0
+  goto end_if_16
+label else_16
+  push constant 0
+  pop local 1
+  push local 2
+  push constant 25
+  call Math.multiply 2
+  push local 3
+  call Math.divide 2
+  pop local 0
+  push static 0
+  push local 0
+  push local 4
+  call Math.multiply 2
+  add
+  pop local 0
+label end_if_16
+label end_if_15
+label end_if_14
+  push local 0
+  push local 1
+  call Ball.setDestination 3
+  return

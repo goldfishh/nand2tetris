@@ -1,0 +1,38 @@
+class Levels {
+	field Array x;
+	field int levels;
+
+	constructor Levels new() {
+		let levels = 10;
+		let x = Array.new(10);
+		let x[0] = 7000;
+		return this;
+	}
+
+	method void drawLevel(int level) {
+		do Levels.drawCastle(x[level-1]);
+		return;
+	}
+
+	function void drawCastle(int location) {
+		var int memAddress;
+		let memAddress = 16384+location;
+		do Memory.poke(memAddress+0, 0);
+		do Memory.poke(memAddress+32, 0);
+		do Memory.poke(memAddress+64, 0);
+		do Memory.poke(memAddress+96, 6552);
+		do Memory.poke(memAddress+128, 8184);
+		do Memory.poke(memAddress+160, 8184);
+		do Memory.poke(memAddress+192, 8184);
+		do Memory.poke(memAddress+224, 7000);
+		do Memory.poke(memAddress+256, 5288);
+		do Memory.poke(memAddress+288, 4080);
+		do Memory.poke(memAddress+320, 4080);
+		do Memory.poke(memAddress+352, 8184);
+		do Memory.poke(memAddress+384, 7800);
+		do Memory.poke(memAddress+416, 7224);
+		do Memory.poke(memAddress+448, 14364);
+		do Memory.poke(memAddress+480, 14364);
+		return;
+	}
+}
